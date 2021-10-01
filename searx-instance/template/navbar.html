@@ -1,0 +1,7 @@
+{% from 'penguin/macros.html' import icon %}
+<div class="searx-navbar">{{- "" -}}
+    <span></span>
+    <a>{{ icon('moon') }} <span>Dark theme</span></a>
+    <a href="{{ url_for('about') }}">{{ icon('info') }} <span>About</span></a>
+    <a href="{{ url_for('preferences') }}">{{ icon('settings') }} <span>Settings</span></a>
+</div>

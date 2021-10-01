@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  searx:
+    image: searx/searx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searx-instance/config:/etc/searx
+      - ./searx-instance/theme:/usr/local/searx/searx/static/themes/penguin
+      - ./searx-instance/template:/usr/local/searx/templates/penguin
+    environment:
+      - BASE_URL=http://localhost:8080
+

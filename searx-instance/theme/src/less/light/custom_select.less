@@ -1,0 +1,25 @@
+.custom-select  {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  justify-items: center;
+  appearance: none;
+  .selector select {
+    background: none;
+    border: none;
+  }
+
+  &:after {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    padding: 2px;
+    transform: translateY(100%) rotate(45deg);
+    -webkit-transform: translateY(100%) rotate(45deg);
+    content: '';
+    right: 0;
+    position: relative;
+  }
+}

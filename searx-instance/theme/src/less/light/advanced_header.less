@@ -1,0 +1,39 @@
+.advanced-header {
+  border-bottom: @gray 1px solid;
+}
+
+#categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .category {
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+    padding-bottom: 5px;
+    &:nth-child(1){
+      margin-left: 0 !important;
+    }
+    &:nth-last-child(1){
+      margin-right: 0 !important;
+    }
+    input:checked + label {
+      color: @dark-green;
+    }
+
+    input:checked +label:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: @dark-green;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+  }
+
+}

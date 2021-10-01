@@ -1,0 +1,102 @@
+{% from 'penguin/macros.html' import result_link with context %}
+<div class="infobox">
+    <div class="infobox-content-wrapper">
+        {% if infobox.img_src %}
+            <img class="infobox-image" class="img-responsive center-block infobox_part"
+                 src="{{ image_proxify(infobox.img_src) }}"/>
+        {% endif %}
+
+        <h1 class="infobox-title">
+            {{ infobox.infobox }}
+        </h1>
+
+        {% if infobox.content %}
+            <p class="infobox-content">
+                {{ infobox.content | safe }}
+            </p>
+        {% endif %}
+    </div>
+
+    {% if infobox.urls %}
+        {% for url in infobox.urls %}
+            <div class="infobox-url">
+                {{ result_link(url.url, url.title) }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {#    <div class="panel-heading">{{- "" -}}#}
+    {#        <div class="infobox_part">#}
+    {#            <div class="{% if not rtl %}pull-right{% endif %}">#}
+    {#                {% for engine in infobox.engines %}#}
+    {#                    <span class="label label-default">{{ engine }}</span>#}
+    {#                {% endfor %}#}
+    {#            </div>#}
+    {#            <h4 class="panel-title">#}
+    {#                <bdi>{{ infobox.infobox }}</bdi>#}
+    {#            </h4>#}
+    {#            {{- "" -}}#}
+    {#            {% for u in infobox.urls %}#}
+    {#                {% if u.official %}#}
+    {#                    <a class="header_url" href="{{ u.url }}">{{ u.url }}</a>#}
+    {#                {% endif %}#}
+    {#            {% endfor %}#}
+    {#        </div>#}
+    {##}
+    {#        {% if infobox.urls -%}#}
+    {#            <div class="infobox_links">{{- "\n" -}}#}
+    {#                <bdi>#}
+    {#                    {%- for url in infobox.urls -%}#}
+    {#                        <p class="btn btn-default btn-xs">{{ result_link(url.url, url.title) }}</p>#}
+    {#                    {% endfor -%}#}
+    {#                </bdi>#}
+    {#                {{- "" -}}#}
+    {#            </div>#}
+    {#        {% endif %}#}
+    {#    </div>#}
+    {#    <div class="panel-body infobox_body">#}
+    {#        {% if infobox.img_src %}#}
+    {#            <img class="img-responsive center-block infobox_part"#}
+    {#                 src="{{ image_proxify(infobox.img_src) }}"/>#}
+    {#        {% endif %}#}
+    {##}
+    {#        {% if infobox.content %}#}
+    {#            <bdi>#}
+    {#                <p class="infobox_part">{{ infobox.content | safe }}</p>#}
+    {#            </bdi>#}
+    {#        {% endif %}#}
+    {##}
+    {#        {% if infobox.attributes -%}#}
+    {#            <table class="table table-striped infobox_part">#}
+    {#                {% for attribute in infobox.attributes -%}#}
+    {#                    <tr>{{- "" -}}#}
+    {#                        <td>#}
+    {#                            <bdi>{{ attribute.label }}</bdi>#}
+    {#                        </td>#}
+    {#                        {%- if attribute.image -%}#}
+    {#                            <td>#}
+    {#                                <img class="img-responsive" src="{{ image_proxify(attribute.image.src) }}"#}
+    {#                                     alt="{{ attribute.image.alt }}"/>#}
+    {#                            </td>#}
+    {#                        {%- else -%}#}
+    {#                            <td>#}
+    {#                                <bdi>{{ attribute.value }}</bdi>#}
+    {#                            </td>#}
+    {#                        {%- endif -%}#}
+    {#                    </tr>#}
+    {#                {% endfor -%}#}
+    {#            </table>#}
+    {#        {% endif %}#}
+    {##}
+    {#        {% if infobox.urls -%}#}
+    {#            <div class="infobox_part">{{- "\n" -}}#}
+    {#                <bdi>#}
+    {#                    {%- for url in infobox.urls -%}#}
+    {#                        <p class="btn btn-default btn-xs">{{ result_link(url.url, url.title) }}</p>#}
+    {#                    {% endfor -%}#}
+    {#                </bdi>#}
+    {#                {{- "" -}}#}
+    {#            </div>#}
+    {#        {% endif %}#}
+    {#    </div>#}
+</div>
