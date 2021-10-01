@@ -6,7 +6,7 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
-  display: block;
+  display: inline-block;
 }
 .feather.s-24 {
   width: 24px;
@@ -797,4 +797,50 @@ th:hover .engine-tooltip,
   content: '';
   right: 0;
   position: relative;
+}
+.links_box .links_box_urls {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+}
+.links_box .links_box_urls .links_box_url {
+  display: inline-block;
+  width: 100%;
+}
+.links_box .links_box_urls .links_box_url button {
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  padding: 10px 15px;
+  border: #A4A4A4 1px solid;
+  margin: 0;
+  border-top: none;
+  font-size: 10pt;
+  color: #29314D;
+  background: none;
+  border-right: none;
+}
+.links_box .links_box_urls .links_box_url:first-child button {
+  border-bottom-left-radius: 7px;
+}
+.links_box .links_box_urls .links_box_url:nth-last-child(1) button {
+  border-right: #A4A4A4 1px solid;
+  border-bottom-right-radius: 7px;
+}
+.links_box .links_box_content_wrapper {
+  padding: 15px;
+  border: #A4A4A4 1px solid;
+  border-radius: 7px 7px 0 0;
+}
+.links_box .links_box_content_wrapper .links_box_title {
+  color: #29314D;
+  font-size: 18pt;
+}
+.links_box .links_box_content_wrapper input {
+  border: #A4A4A4 1px solid;
+  border-radius: 7px;
+  width: 100%;
+  appearance: none;
+  padding: 10px;
 }

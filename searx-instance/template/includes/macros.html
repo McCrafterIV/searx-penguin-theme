@@ -1,6 +1,6 @@
 <!-- Draw glyphicon icon from bootstrap-theme -->
-{% macro icon(name, size="24") -%}
-    <svg class="feather s-{{ size }}">
+{% macro icon(name, size="24", classes='') -%}
+    <svg class="feather s-{{ size }} {% if classes %}{{ classes }}{% endif %}">
         <use href="{{ url_for('static', filename='themes/penguin/img/icons/feather-sprite.svg') }}#{{ name }}"/>
     </svg>
 {%- endmacro %}
