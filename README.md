@@ -9,7 +9,7 @@ in [this issue](https://github.com/searx/searx/issues/2440#issuecomment-80308421
 It's currently quite messy and under development and not complete, so it shouldn't be used yet. If you're interested in
 developing this theme, feel free to create merge requests or issues :)
 
-## hot to start this?
+## how to start this?
 
 The easiest way to start developing this theme is to start the docker container using `docker-compose up -d` which will
 mount the theme and template directories. While developing the theme, don't forget to run `npm run start` to live build
