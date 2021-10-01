@@ -8,7 +8,7 @@ services:
     volumes:
       - ./searx-instance/config:/etc/searx
       - ./searx-instance/theme:/usr/local/searx/searx/static/themes/penguin
-      - ./searx-instance/template:/usr/local/searx/templates/penguin
+      - ./searx-instance/template:/usr/local/searx/searx/templates/penguin
     environment:
       - BASE_URL=http://localhost:8080
 
