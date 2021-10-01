@@ -1,10 +1,10 @@
 {% extends "penguin/base.html" %}
 {% block body %}
-    {% include 'penguin/navbar.html' %}
+    {% include 'penguin/index_includes/navbar.html' %}
 
     <div class="container is-max-desktop has-text-centered is-vcentered">
             <img id="main-logo" class="mb-6" src="{{ url_for('static', filename='img/logo_searx_a.png') }}"
                  alt="searx logo"/>
-        {% include 'penguin/search_full.html' %}
+        {% include 'penguin/includes/search_full.html' %}
     </div>
 {% endblock %}
