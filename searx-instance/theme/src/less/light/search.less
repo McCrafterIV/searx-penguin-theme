@@ -1,63 +1,53 @@
-#search_box {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  border: @gray 1px solid;
-  border-radius: @border-radius !important;
-  @buttonWidth: 40px;
+@grid-gap: 20px;
 
-  #q {
-    height: 30px !important;
-    border: none !important;
-    margin: 2px;
-    float: left;
-    width: 100%;
-    padding: 20px 10px 20px 20px;
-    outline: none;
-    font-size: 12pt;
+main#search_content {
+  display: grid;
+  grid-gap: @grid-gap;
+  grid-template-areas: 'results sidebar' 'results clear';
+  grid-template-columns: auto minmax(350px 5  00px);
+  grid-template-rows: 100% auto;
+
+  &.only_template_images {
+    grid-template-areas: 'results' 'sidebar';
+    margin-left: @grid-gap;
+    margin-right: @grid-gap;
   }
 
-  .input-group-btn {
-    align-items: center;
-    display: inline-flex;
-    flex-direction: row;
-    width: calc(@buttonWidth * 2);
-    border-left-color: @gray;
-    border-left-style: solid;
-    border-left-width: 1px;
+  #section__results {
+    grid-area: results;
   }
 
-  #clear_search {
-    border-right-color: @gray;
-    border-right-style: solid;
-    border-right-width: 1px;
-    color: @gray;
-  }
+  #section__sidebar {
+    grid-area: sidebar;
 
-  #submit_search {
-    color: @dark-green;
+    display: inline-grid;
+    grid-template-areas: 'unresponsive_engines' 'infoboxes' 'suggestions' 'link' 'result_count';
+    grid-row-gap: @grid-gap;
 
-    &:hover {
-      color: #FFFFFF;
-      background-color: @dark-green;
-      border-bottom-right-radius: @border-radius;
-      border-top-right-radius: @border-radius;
+    & + #section_results.only_template_images {
+      background-color: red;
+    }
+
+    #sidebar__unresponsive_engines {
+      grid-area: unresponsive_engines;
+    }
+
+    #sidebar__infoboxes {
+      grid-area: infoboxes;
+    }
+
+    #sidebar__suggestions {
+      grid-area: suggestions;
+    }
+
+    #sidebar__link {
+      grid-area: link;
+    }
+
+    #sidebar__result_count {
+      grid-area: result_count;
     }
   }
-
-  button {
-    cursor: pointer;
-    padding: 0 10px;
-    height: 44px !important;
-    border: none;
-    box-shadow: none;
-    background: none;
-    margin: 0;
-  }
 }
 
 
-#main-logo {
-    max-width: 300px;
-    width: 100vw;
-}

@@ -49,9 +49,9 @@
 {% macro result_footer(result, id) -%}
     <div class="result-footer">
         <div class="links">
-            {% if result.engine~".png" in favicons %}
-                {{ draw_favicon(result.engine) }}
-            {% endif %}
+{#            {% if result.engine~".png" in favicons %}#}
+{#                {{ draw_favicon(result.engine) }}#}
+{#            {% endif %}#}
             {%- if result.pretty_url -%}
                 <div class="external-link">
                     {{ result_link(result.url, result.url) }}
