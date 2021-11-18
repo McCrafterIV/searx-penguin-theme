@@ -1,5 +1,5 @@
-{% from 'penguin/includes/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle, support_toggle, custom_select_class %}
-{% extends "penguin/base.html" %}
+{% from 'penguin/base/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle, support_toggle, custom_select_class %}
+{% extends "penguin/base/base.html" %}
 {% macro engine_about(search_engine, id) -%}
 {% if search_engine.about is defined %}
 {% set about = search_engine.about %}
@@ -39,13 +39,13 @@
                     <div class="row form-group">
                         {% if rtl %}
                         <div class="col-sm-11 col-md-10">
-                            {% include 'penguin/includes/categories.html' %}
+                            {% include 'penguin/components/categories.html' %}
                         </div>
                         <label class="col-sm-3 col-md-2" for="categories">{{ _('Default categories') }}</label>
                         {% else %}
                         <label class="col-sm-3 col-md-2" for="categories">{{ _('Default categories') }}</label>
                         <div class="col-sm-11 col-md-10 search-categories">
-                            {% include 'penguin/includes/categories.html' %}
+                            {% include 'penguin/components/categories.html' %}
                         </div>
                         {% endif %}
                     </div>
@@ -54,7 +54,7 @@
                     {% set language_label = _('Search language') %}
                     {% set language_info = _('What language do you prefer for search?') %}
                     {{ preferences_item_header(language_info, language_label, rtl, 'language') }}
-                                                {% include 'penguin/includes/languages.html' %}
+                                                {% include 'penguin/components/languages.html' %}
                     {{ preferences_item_footer(language_info, language_label, rtl) }}
                     {% endif %}
 

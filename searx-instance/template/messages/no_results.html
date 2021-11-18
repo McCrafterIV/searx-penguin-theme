@@ -1,4 +1,4 @@
-{% from 'penguin/includes/macros.html' import icon %}
+{% from 'penguin/base/macros.html' import icon %}
 {% if unresponsive_engines %}
 <div class="alert alert-danger fade in" role="alert">
     <p><strong class="lead">{{ icon('remove-sign') }} {{ _('Error!') }}</strong> {{ _('Engines cannot retrieve results.') }}</p>

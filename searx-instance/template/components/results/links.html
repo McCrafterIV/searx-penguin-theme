@@ -1,4 +1,4 @@
-{% from 'penguin/includes/macros.html' import icon %}
+{% from 'penguin/base/macros.html' import icon %}
 {%- macro search_url() %}{{ url_for('search', _external=True) }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
 
 <div class="links_box">

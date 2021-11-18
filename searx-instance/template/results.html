@@ -1,4 +1,4 @@
-{% extends "penguin/extended_base.html" %}
+{% extends "penguin/base/extended_base.html" %}
 {% macro search_form_attrs(pageno) -%}
     {%- for category in selected_categories -%}<input type="hidden" name="category_{{ category }}" value="1"/>
     {%- endfor -%}
@@ -142,7 +142,7 @@
             <div id="sidebar__infoboxes">
                 {% if infoboxes %}
                     {% for infobox in infoboxes %}
-                        {% include 'penguin/result_includes/infobox.html' %}{{- "\n\n" -}}
+                        {% include 'penguin/components/results/infobox.html' %}{{- "\n\n" -}}
                     {% endfor %}
                 {% endif %}
             </div>
@@ -176,7 +176,7 @@
 
             <div id="sidebar__link">
                 {% if not only_template == 'images' %}
-                    {% include 'penguin/result_includes/links.html' %}
+                    {% include 'penguin/components/results/links.html' %}
                 {% endif %}
             </div>
 
