@@ -56,32 +56,38 @@
                 {#            {% if result.engine~".png" in favicons %}#}
                 {#                {{ draw_favicon(result.engine) }}#}
                 {#            {% endif %}#}
-            <div class="external-link">
-                {{ result_link(result.url, result.url) }}
-            </div>
-            <div class="internal-links">
-                {%- if result.url -%}
-                    {%- if result.cached_url -%}
-                        <small>{{ result_link(result.cached_url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
-                    {%- elif not result.is_onion -%}
-                        <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
+                <div class="external-link">
+                    {{ result_link(result.url, result.url) }}
+                </div>
+                <div class="internal-links">
+                    {%- if result.url -%}
+                        {%- if result.cached_url -%}
+                            <small>{{ result_link(result.cached_url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
+                        {%- elif not result.is_onion -%}
+                            <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
+                        {%- endif -%}
                     {%- endif -%}
-                {%- endif -%}
-                {%- if proxify -%}
-                    <small>
-                        {{ result_link(proxify(result.url), icon('sort') + _('link'), "text-info", id) }}
-                    </small>
-                {%- endif -%}
-            </div>
+                    {%- if proxify -%}
+                        <small>
+                            {{ result_link(proxify(result.url), icon('sort') + _('link'), "text-info", id) }}
+                        </small>
+                    {%- endif -%}
+                </div>
             </div>
         {%- endif -%}
 
-        <div class="engines column">
-            {%- for engine in result.engines -%}
-                <span>
+        <div class="engines column{% if result.engines|length > 2 %} tooltip{% endif %}">
+            {% if result.engines|length > 2 %}
+                <span title="{% for engine in result.engines %} {{ engine }} {% endfor %}">
+                    {{ result.engines|first }} ...
+                </span>
+            {% else %}
+                {%- for engine in result.engines -%}
+                    <span>
                     {{ engine }}
                 </span>
-            {%- endfor -%}
+                {%- endfor -%}
+            {% endif %}
         </div>
     </div>
 {%- endmacro %}
