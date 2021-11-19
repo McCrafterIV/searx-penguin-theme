@@ -12,7 +12,6 @@ module.exports = function(grunt) {
         filter: 'isFile',
         timestamp: true,
         src: [
-          './corejs-typeahead/dist/typeahead.bundle.min.js',
           './jquery/dist/jquery.min.js',
           './leaflet/dist/leaflet.js',
         ]
@@ -57,31 +56,18 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/js/*.js', '../__common__/js/image_layout.js'],
+        src: ['src/js/*.js'],
         dest: 'js/searx.js'
       }
     },
     uglify: {
       options: {
         sourceMap: true,
-        banner: '/*! oscar/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %>  */\n'
+        banner: '/*! oscar/searx.js | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %>  */\n'
       },
       dist: {
         files: {
           'js/searx.min.js': ['<%= concat.dist.dest %>']
-        }
-      }
-    },
-    jshint: {
-      files: ['gruntfile.js', 'js/searx_src/*.js', '../__common__/js/image_layout.js'],
-      options: {
-        reporterOutput: "",
-        // options here to override JSHint defaults
-        globals: {
-          jQuery: true,
-          console: true,
-          module: true,
-          document: true
         }
       }
     },
@@ -115,8 +101,8 @@ module.exports = function(grunt) {
     },
     watch: {
         scripts: {
-            files: ['<%= jshint.files %>'],
-            tasks: ['jshint', 'concat', 'uglify']
+            files: ['src/js/**.js'],
+            tasks: ['concat', 'uglify']
         },
         penguin_styles: {
             files: ['src/less/light/**/*.less', 'src/less/dark/**/*.less'],
@@ -127,14 +113,11 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('test', ['jshint']);
-
-  grunt.registerTask('default', ['copy', 'jshint', 'concat', 'uglify', 'less']);
+  grunt.registerTask('default', ['copy', 'concat', 'uglify', 'less']);
 
   grunt.registerTask('styles', ['less']);
 

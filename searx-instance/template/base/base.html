@@ -72,13 +72,11 @@
 {% endblock %}
 
 
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='themes/penguin/js/jquery.min.js') }}"></script>
 {% if load_leaflet %}{{ "    " }}
-    <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>{{ "\n" }}{% endif %}
-{% if autocomplete %}{{ "    " }}
-    <script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{{ "\n" }}{% endif %}
+    <script src="{{ url_for('static', filename='themes/penguin/js/leaflet.min.js') }}"></script>{{ "\n" }}{% endif %}
 
-<script src="{{ url_for('static', filename='js/searx.min.js') }}"
+<script src="{{ url_for('static', filename='themes/penguin/js/searx.js') }}"
         data-method="{{ method or 'POST' }}"
         data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"
         data-translations="{{ translations }}"></script>
@@ -86,12 +84,5 @@
     {{ "" }}
     <script src="{{ url_for('static', filename=script) }}"></script>
 {% endfor %}
-<noscript>
-    <style>
-        .glyphicon {
-            display: none;
-        }
-    </style>
-</noscript>
 </body>
 </html>

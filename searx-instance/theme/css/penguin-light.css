@@ -192,7 +192,7 @@ main#search_content #section__sidebar #sidebar__result_count {
   align-items: center;
   flex-direction: row;
   border: #A4A4A4 1px solid;
-  border-radius: 7px !important;
+  border-radius: 7px;
 }
 #search_box #q {
   height: 30px !important;
@@ -739,6 +739,31 @@ th:hover .engine-tooltip,
   content: '';
   right: 0;
   position: relative;
+}
+#search_suggestions {
+  position: absolute;
+  display: none;
+  border: #A4A4A4 1px solid;
+  border-radius: 0 0 7px 7px;
+  border-top: none;
+  text-align: left;
+}
+#search_suggestions .suggestion {
+  padding: 8px 20px;
+  cursor: pointer;
+}
+#search_suggestions .suggestion:hover {
+  background-color: #A4A4A4;
+}
+#search_suggestions .suggestion.selected {
+  background-color: #A4A4A4;
+}
+#search_suggestions.show {
+  display: block;
+}
+#search_suggestions.show:not(:empty) ~ #search_box {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .infobox .infobox-url a {
   padding: 10px 15px;

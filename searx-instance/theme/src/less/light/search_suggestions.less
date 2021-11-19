@@ -1,0 +1,33 @@
+
+#search_suggestions {
+  position: absolute;
+  display: none;
+  border: @gray 1px solid;
+  border-radius: 0 0 @border-radius @border-radius;
+  border-top: none;
+  text-align: left;
+
+  .suggestion {
+    padding: 8px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: @gray;
+    }
+
+    &.selected {
+      background-color: @gray;
+    }
+  }
+
+
+  &.show {
+    display: block;
+  }
+
+}
+
+#search_suggestions.show:not(:empty) ~ #search_box {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}

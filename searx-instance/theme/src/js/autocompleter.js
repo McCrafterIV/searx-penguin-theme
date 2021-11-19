@@ -1,60 +1,111 @@
-/**
- * searx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * searx is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with searx. If not, see < http://www.gnu.org/licenses/ >.
- *
- * (C) 2014 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
- */
+$(document).ready(function () {
+    if (searx.autocompleter) {
+        let selected_entry = -1;
+        let suggestions_opened = false;
+        let last_query = ""
 
-$(document).ready(function(){
-    var original_search_value = '';
-    if(searx.autocompleter) {
-        var searchResults = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: './autocompleter?q=%QUERY',
-                wildcard: '%QUERY'
+        let q = $('#q');
+        let search_box = document.getElementById('search_box');
+        let search_suggestions = $('#search_suggestions');
+
+        function openSuggestions(force = false) {
+            if (search_suggestions.children().length > 0 || force) {
+                suggestions_opened = true;
+                search_suggestions.css({
+                    'top': (search_box.offsetTop + search_box.clientHeight).toString() + "px",
+                    'width': (search_box.clientWidth + 2).toString() + 'px',
+                });
+                search_suggestions.addClass('show');
+            }
+        }
+
+        function closeSuggestions(force = false) {
+            if (!search_suggestions.is(':hover') || force) {
+                suggestions_opened = false;
+                search_suggestions.removeClass('show');
+            }
+        }
+
+        function useSuggestion(e, forceSubmit = false) {
+            closeSuggestions(true);
+            q.val(search_suggestions.children().eq(selected_entry).text());
+            if (e.keyCode === 13 || forceSubmit) {
+                $('#search_form').submit()
+            }
+        }
+
+        q.on('focusin', () => openSuggestions());
+
+        q.on('focusout', () => closeSuggestions());
+
+        $('body').on('keydown', (e) => {
+            if (e.keyCode === 40 || e.keyCode === 38 && q.is(':focus')) {
+                e.preventDefault();
+            } else if (suggestions_opened && selected_entry !== -1 && (e.keyCode === 13 || e.keyCode === 39)) {
+                //    ENTER or arrow right
+                e.preventDefault();
+                useSuggestion(e);
             }
         });
-        searchResults.initialize();
 
-        $("#q").on('keydown', function(e) {
-			if(e.which == 13) {
-                original_search_value = $('#q').val();
-			}
-		});
-        $('#q').typeahead({
-            name: 'search-results',
-            highlight: false,
-            hint: true,
-            displayKey: function(result) {
-                return result;
-            },
-            classNames: {
-                input: 'tt-input',
-                hint: 'tt-hint',
-                menu: 'tt-dropdown-menu',
-                dataset: 'tt-dataset-search-results',
-            },
-        }, {
-            name: 'autocomplete',
-            source: searchResults,
-        });
-        $('#q').bind('typeahead:select', function(ev, suggestion) {
-            if(original_search_value) {
-                $('#q').val(original_search_value);
+        q.on('keyup', (e) => {
+            if (e.currentTarget.value === "") return closeSuggestions();
+
+            if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 27 || e.code === 39 || e.keyCode === 13) {
+                e.preventDefault();
+                switch (e.keyCode) {
+                    case 40:
+                        // arrow down
+                        if (selected_entry === search_suggestions.children().length - 1) {
+                            selected_entry = 0
+                        } else {
+                            selected_entry += 1
+                        }
+                        break;
+                    case 38:
+                        //    arrow up
+                        if (selected_entry === 0) {
+                            selected_entry = search_suggestions.children().length - 1
+                        } else {
+                            selected_entry -= 1
+                        }
+                        break;
+                    case 27:
+                        // ESC
+                        selected_entry = -1
+                        closeSuggestions()
+                        break;
+                }
+                $('.suggestion').removeClass('selected');
+                if (selected_entry !== -1) search_suggestions.children().eq(selected_entry).addClass('selected')
+                return;
             }
-            $("#search_form").submit();
-        });
+
+            if (e.currentTarget.value === last_query) return;
+
+            fetch("/autocompleter?q=" + e.currentTarget.value)
+                .then((response) => response.json())
+                .then((jsonResponse) => {
+                    last_query = jsonResponse[0]
+                    let suggestions = jsonResponse[1];
+                    if (suggestions.length === 0) return;
+                    selected_entry = -1
+
+                    search_suggestions.empty()
+                    for (const key in suggestions) {
+                        if (key === selected_entry) {
+                            $('#search_suggestions').append('<div class="suggestion selected">' + suggestions[key] + '</div>')
+                        } else {
+                            $('#search_suggestions').append('<div class="suggestion">' + suggestions[key] + '</div>')
+                        }
+                    }
+                    $('.suggestion').on('click', (e) => useSuggestion(e, true));
+                    openSuggestions(true);
+                })
+                .catch((error) => {
+                    console.log("Error: " + error);
+                    closeSuggestions()
+                });
+        })
     }
 });
