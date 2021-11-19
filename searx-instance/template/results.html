@@ -35,7 +35,7 @@
     <main id="search_content"
           class="
                   {{ only_template }}{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}">
-        <section class="{{ only_template }}" id="section__results">
+        <section class="{{ only_template }}{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}" id="section__results">
 
             {% for result in results -%}
                 <div class="result {% if result['template'] %}result-

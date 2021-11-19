@@ -881,6 +881,9 @@ th:hover .engine-tooltip,
   border-radius: 8px;
   outline: inherit;
 }
+#section__results img {
+  border-radius: 7px;
+}
 #section__results:not(.only_template_images) {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -898,30 +901,23 @@ th:hover .engine-tooltip,
 #section__results:not(.only_template_images) .result .result_header {
   font-size: 16pt !important;
 }
+#section__results:not(.only_template_images) .result .result-subheader {
+  font-size: 10pt;
+}
 #section__results:not(.only_template_images) .result .result-content {
   margin: 0;
   font-size: 10pt;
 }
 #section__results:not(.only_template_images) .result .result-footer {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
   font-size: 10pt !important;
 }
-#section__results:not(.only_template_images) .result .result-footer .links {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-}
 #section__results:not(.only_template_images) .result .result-footer .links .external-link {
-  margin-right: 4px;
+  text-overflow: ellipsis;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
 }
-#section__results:not(.only_template_images) .result .result-footer .links .result-link {
-  display: flex;
-  margin: 0 6px;
-}
-#section__results:not(.only_template_images) .result .result-footer .links img {
+#section__results:not(.only_template_images) .result .result-footer .links .external-link img {
   max-height: 20px;
   width: auto;
   margin-right: 2px;
@@ -931,6 +927,8 @@ th:hover .engine-tooltip,
   display: inline-grid;
   grid-gap: 5px;
   grid-auto-flow: column;
+  align-items: end;
+  text-align: right;
 }
 #section__results:not(.only_template_images) .result .result-footer .engines span {
   font-size: 10pt;
