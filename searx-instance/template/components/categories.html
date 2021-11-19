@@ -4,6 +4,7 @@
             <div class="category">
                 <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}"
                        name="category_{{ category }}"
+                       onchange="this.form.submit()"
                        {% if category in selected_categories %}checked="checked"{% endif %}/>{{- '' -}}
                 <label for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
             </div>
@@ -14,6 +15,7 @@
             <div class="category">
                 <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}"
                        name="category_{{ category }}"
+                       onchange="this.form.submit()"
                        {% if category in selected_categories %}checked="checked"{% endif %}/>{{- '' -}}
                 <label for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
             </div>
