@@ -745,8 +745,9 @@ th:hover .engine-tooltip,
   display: none;
   border: #A4A4A4 1px solid;
   border-radius: 0 0 7px 7px;
-  border-top: none;
   text-align: left;
+  background-color: #ffffff;
+  z-index: 50;
 }
 #search_suggestions .suggestion {
   padding: 8px 20px;

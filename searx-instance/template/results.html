@@ -24,7 +24,7 @@
 {% if results and results|map(attribute='template')|unique|list|count == 1 %}
     {% set only_template = 'only_template_' + results[0]['template']|default('default')|replace('.html', '') %}
 {% else %}
-    {% set unique_template = '' %}
+    {% set only_template = '' %}
 {% endif %}
 
 {% block title %}{{ q|e }} - {% endblock %}
@@ -33,11 +33,13 @@
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
     <main id="search_content"
-          class="{{ only_template }} {% if not only_template == 'only_template_images' %}container is-max-desktop{% endif %}">
+          class="
+                  {{ only_template }}{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}">
         <section class="{{ only_template }}" id="section__results">
 
             {% for result in results -%}
                 <div class="result {% if result['template'] %}result-
+
 
 
 
@@ -157,7 +159,8 @@
 
                         <div class="suggestion_box_content">
                             {% for suggestion in suggestions %}
-                                <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" role="navigation">
+                                <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
+                                      role="navigation">
                                     {% if current_language != 'all' %}
                                         <input type="hidden" name="language" value="{{ current_language }}">
                                     {% endif %}

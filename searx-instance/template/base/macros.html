@@ -38,10 +38,10 @@
     {%- if result.publishedDate %}
         <time class="text-muted" datetime="{{ result.pubdate }}">{{ result.publishedDate }}</time>{% endif -%}
     {%- if result.magnetlink %}
-        <small> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink", id) }}</small>
+        <small> &bull; {{ result_link(result.magnetlink, icon('link', 16) + _('magnet link'), "magnetlink", id) }}</small>
     {% endif -%}
     {%- if result.torrentfile %}<small>
-        &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile", id) }}</small>
+        &bull; {{ result_link(result.torrentfile, icon('link', 16) + _('torrent file'), "torrentfile", id) }}</small>
     {% endif -%}
 {%- endmacro %}
 
