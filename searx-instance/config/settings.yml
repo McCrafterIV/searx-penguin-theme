@@ -43,12 +43,16 @@ ui:
     theme_args :
         oscar_style : logicodev # default style of oscar
 #   results_on_new_tab: False  # Open result links in a new tab by default
-#   categories_order :
-#     - general
-#     - files
-#     - map
-#     - it
-#     - science
+    categories_order :
+     - general
+     - images
+     - news
+     - videos
+     - map
+     - files
+     - it
+     - science
+     - social media
 
 # Lock arbitrary settings on the preferences page.
 # To find the ID of the user setting you want to lock, check
