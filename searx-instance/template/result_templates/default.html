@@ -18,7 +18,7 @@
         </div>
     {% endif -%}
 
-    <div class="column{% if result.img_src or result.thumbnail %} is-four-fifths{% endif %}" style="max-width: 80%">
+    <div class="column{% if result.img_src or result.thumbnail %} is-four-fifths{% endif %}" >
         {{- result_header(result, favicons, loop.index) -}}
         <br>
         {{- result_sub_header(result, loop.index) -}}

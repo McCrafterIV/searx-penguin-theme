@@ -52,8 +52,10 @@
                     {{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}{% for e in result.engines %} {{ e }}{% endfor %}">
                     {%- set index = loop.index -%}
                     {%- if result.template -%}
+                        <h1>{{ result['template'] }}</h1>
                         {% include get_result_template('penguin', result['template']) %}
                     {%- else -%}
+                        <h1>default</h1>
                         {% include 'penguin/result_templates/default.html' %}
                     {%- endif -%}
                 </div>
