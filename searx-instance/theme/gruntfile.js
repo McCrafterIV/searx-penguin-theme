@@ -71,31 +71,23 @@ module.exports = function(grunt) {
         }
       }
     },
-    less: {
+    sass: {
       development: {
         options: {
-          paths: ["src/less"]
+          loadPath: ["src/sass"]
         },
         files: {
-          "css/penguin-light.css": "src/less/light/penguin.less",
-          "css/penguin-dark.css": "src/less/dark/penguin.less",
+          "css/penguin-light.css": "src/sass/light/penguin.sass",
+          "css/penguin-dark.css": "src/sass/dark/penguin.sass",
         }
       },
       production: {
         options: {
-          paths: ["src/less"],
-          plugins: [
-            new (require('less-plugin-clean-css'))()
-          ],
-          sourceMap: true,
-          sourceMapURL: (name) => { const s = name.split('/'); return s[s.length - 1] + '.map';},
-          outputSourceFiles: false,
-          sourceMapRootpath: '../'
+          loadPath: ["src/sass"],
         },
         files: {
-          "css/leaflet.min.css": "css/leaflet.css",
-          "css/penguin-light.min.css": "src/less/light/penguin.less",
-          "css/penguin-dark.min.css": "src/less/dark/penguin.less",
+          "css/penguin-light.min.css": "src/sass/light/penguin.sass",
+          "css/penguin-dark.min.css": "src/sass/dark/penguin.sass",
         }
       },
     },
@@ -105,8 +97,8 @@ module.exports = function(grunt) {
             tasks: ['concat', 'uglify']
         },
         penguin_styles: {
-            files: ['src/less/light/**/*.less', 'src/less/dark/**/*.less'],
-            tasks: ['less:development', 'less:production']
+            files: ['src/sass/light/**/*.sass', 'src/sass/dark/**/*.sass'],
+            tasks: ['sass:development', 'sass:production']
         },
     }
   });
@@ -115,10 +107,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['copy', 'concat', 'uglify', 'less']);
+  grunt.registerTask('default', ['copy', 'concat', 'uglify', 'sass']);
 
-  grunt.registerTask('styles', ['less']);
+  grunt.registerTask('styles', ['sass']);
 
 };

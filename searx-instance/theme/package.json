@@ -7,7 +7,9 @@
         "grunt-contrib-jshint": "~3.0.0",
         "grunt-contrib-less": "~3.0.0",
         "grunt-contrib-uglify": "~5.0.0",
-        "grunt-contrib-watch": "~1.1.0"
+        "grunt-contrib-watch": "~1.1.0",
+        "gulp-sass": "^5.1.0",
+        "sass": "^1.45.2"
     },
     "scripts": {
         "build": "npm install && grunt",
@@ -17,6 +19,7 @@
     "dependencies": {
         "bulma": "^0.9.3",
         "feather-icons": "^4.28.0",
+        "grunt-contrib-sass": "^2.0.0",
         "jquery": "^3.6.0",
         "leaflet": "^1.7.1",
         "less-plugin-clean-css": "^1.5.1"
