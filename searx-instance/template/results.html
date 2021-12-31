@@ -1,4 +1,5 @@
 {% extends "penguin/base/extended_base.html" %}
+{% from 'penguin/base/macros.html' import icon with context %}
 {% macro search_form_attrs(pageno) -%}
     {%- for category in selected_categories -%}<input type="hidden" name="category_{{ category }}" value="1"/>
     {%- endfor -%}
@@ -48,6 +49,7 @@
                             {% include 'penguin/result_templates/default.html' %}
                         {%- endif -%}
                     </div>
+                    <hr class="result-divider">
                 {% endfor %}
 
                 {% if not results and not answers -%}
@@ -57,64 +59,28 @@
                 <div class="clearfix"></div>
 
                 {% if paging -%}
-                    <section id="results__paging">
-                        {% if rtl %}
-                            <div id="pagination">
-                                <div class="pull-left">
-                                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                          class="pull-left">
-                                        {{- search_form_attrs(pageno + 1) -}}
-                                        {{- engine_data_form(engine_data) -}}
-                                        <button type="submit" class="btn btn-default"><span
-                                                class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>
-
-                                    </form>
-
-                                </div>
-                                <div class="pull-right">
-                                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                          class="pull-left">
-                                        {{- search_form_attrs(pageno-1) -}}
-                                        {{- engine_data_form(engine_data) -}}
-                                        <button type="submit" class="btn btn-default"
-                                                {% if pageno == 1 %}disabled{% endif %}>
-                                            <span class="glyphicon glyphicon-forward"></span> {{ _('previous page') }}
-                                        </button>
-
-                                    </form>
-
-                                </div>
-                            </div><!-- /#pagination -->
-                            <div class="clearfix"></div>
-                        {% else %}
-                            <div id="pagination">
-                                <div class="pull-left">
-                                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                          class="pull-left">
-                                        {{- search_form_attrs(pageno-1) -}}
-                                        {{- engine_data_form(engine_data) -}}
-                                        <button type="submit" class="btn btn-default"
-                                                {% if pageno == 1 %}disabled{% endif %}>
-                                            <span class="glyphicon glyphicon-backward"></span> {{ _('previous page') }}
-                                        </button>
-
-                                    </form>
-
-                                </div>
-                                <div class="pull-right">
-                                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                          class="pull-left">
-                                        {{- search_form_attrs(pageno + 1) -}}
-                                        {{- engine_data_form(engine_data) -}}
-                                        <button type="submit" class="btn btn-default"><span
-                                                class="glyphicon glyphicon-forward"></span> {{ _('next page') }}</button>
-
-                                    </form>
-
-                                </div>
-                            </div><!-- /#pagination -->
-                            <div class="clearfix"></div>
+                    <section id="section__results__paging">
+                        {% if pageno != 1 %}
+                            <div class="pull-left">
+                                <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+                                    {{- search_form_attrs(pageno-1) -}}
+                                    {{- engine_data_form(engine_data) -}}
+                                    <button type="submit" class="button">
+                                        {{ icon('chevron-left', 20, "no-padding") }} {{ _('Previous page') }}
+                                    </button>
+                                </form>
+                            </div>
                         {% endif %}
+                        <div class="pull-right">
+                            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
+                                  class="pull-left">
+                                {{- search_form_attrs(pageno + 1) -}}
+                                {{- engine_data_form(engine_data) -}}
+                                <button type="submit" class="button">
+                                    {{ _('Next page') }} {{ icon('chevron-right', 20, "no-padding") }}
+                                </button>
+                            </form>
+                        </div>
                     </section>
                 {% endif %}
             </section><!-- /#main_results -->

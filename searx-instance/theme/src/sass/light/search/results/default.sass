@@ -2,15 +2,25 @@
 #section__results
   img
     border-radius: $border-radius
+
   &:not(.only_template_images)
     margin-top: 20px
     margin-bottom: 20px
     display: inline-flex
     flex-direction: column
     grid-gap: 20px
+
+    .result-divider
+      display: none
+      @include touch()
+        display: block
+        width: 100%
+        border: .01px $dim-gray solid
+
     .result
       &:nth-child(1)
         margin-top: 0
+
       .highlight *
         font-weight: bold
         font-size: 10pt
@@ -18,14 +28,10 @@
       .result_header
         font-size: 16pt !important
 
-
       .result-subheader
         font-size: 0pt
-
         span, time
           font-size: 10pt
-
-
         *:not(:last-child):after
           content: "•"
           padding: 0 4px
@@ -36,10 +42,8 @@
         margin: 0
         font-size: 10pt
 
-
       .result-footer
         font-size: 10pt !important
-
 
         .links
           display: flex
@@ -50,7 +54,6 @@
             width: auto
             margin-right: 2px
 
-
           .external-link
             text-overflow: ellipsis
             max-inline-size: 60%
@@ -58,10 +61,13 @@
             overflow: hidden
             display: inline-block
             margin-right: 10px
+
           .internal-links
             display: inline-block
+
             div
               display: flex
+
         .engines
           display: inline-flex
           gap: 5px
@@ -69,6 +75,7 @@
           align-items: end
           text-align: right
           justify-content: flex-end
+
           span
             font-size: 10pt
             font-weight: normal
