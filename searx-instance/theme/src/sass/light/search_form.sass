@@ -5,6 +5,11 @@
   border: $gray 1px solid
   border-radius: $border-radius
   $buttonWidth: 40px
+  max-width: calc(100 * 960px / 70)
+  @include mobile()
+    width: 100%
+  @include touch()
+    max-width: calc(100 * 960px / 60)
 
   #q 
     height: 30px !important
