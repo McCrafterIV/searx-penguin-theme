@@ -176,9 +176,9 @@ main#search_content #section__results {
 }
 main#search_content #section__sidebar {
   grid-area: sidebar;
-  display: inline-grid;
-  grid-template-areas: 'unresponsive_engines' 'infoboxes' 'suggestions' 'link' 'result_count';
-  grid-row-gap: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  grid-gap: 20px;
 }
 main#search_content #section__sidebar + #section_results.only_template_images {
   background-color: red;
@@ -898,8 +898,8 @@ th:hover .engine-tooltip,
 #section__results:not(.only_template_images) {
   margin-top: 20px;
   margin-bottom: 20px;
-  display: grid;
-  grid-auto-flow: row;
+  display: flex;
+  flex-direction: column;
   grid-gap: 20px;
 }
 #section__results:not(.only_template_images) .result:nth-child(1) {

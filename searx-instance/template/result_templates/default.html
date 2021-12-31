@@ -10,7 +10,7 @@
 {#</div>#}
 {#{%- endif -%}#}
 
-<div class="columns">
+{% if result.img_src or result.thumbnail %}<div class="columns">{% endif %}
     {%- if result.img_src or result.thumbnail -%}
         <div class="column is-one-fifth">
             <img src="{{ image_proxify(result.img_src or result.thumbnail) }}" title="{{ result.title|striptags }}"
@@ -18,7 +18,7 @@
         </div>
     {% endif -%}
 
-    <div class="column{% if result.img_src or result.thumbnail %} is-four-fifths{% endif %}" >
+    {% if result.img_src or result.thumbnail %}<div class="column is-four-fifths" >{% endif %}
         {{- result_header(result, favicons, loop.index) -}}
         <br>
         {{- result_sub_header(result, loop.index) -}}
@@ -31,5 +31,5 @@
         {%- else -%}
             {{ result_footer(result, loop.index) }}
         {%- endif -%}
-    </div>
-</div>
+    {% if result.img_src or result.thumbnail %} </div>{% endif %}
+{% if result.img_src or result.thumbnail %} </div>{% endif %}

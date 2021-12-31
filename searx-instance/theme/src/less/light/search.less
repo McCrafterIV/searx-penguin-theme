@@ -20,9 +20,9 @@ main#search_content {
   #section__sidebar {
     grid-area: sidebar;
 
-    display: inline-grid;
-    grid-template-areas: 'unresponsive_engines' 'infoboxes' 'suggestions' 'link' 'result_count';
-    grid-row-gap: @grid-gap;
+    display: inline-flex;
+    flex-direction: column;
+    grid-gap: @grid-gap;
 
     & + #section_results.only_template_images {
       background-color: red;
