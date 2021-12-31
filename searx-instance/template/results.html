@@ -32,8 +32,9 @@
     <link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}"
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
+    <div class="container is-max-desktop">
         <main id="search_content"
-              class="container {{ only_template }} {% if not only_template == 'only_template_images' %} {% endif %}">
+              class="{{ only_template }} {% if not only_template == 'only_template_images' %} {% endif %}">
             <section class="{{ only_template }}"
                      id="section__results">
                 {% for result in results -%}
@@ -118,64 +119,65 @@
                 {% endif %}
             </section><!-- /#main_results -->
 
-                <div id="section__sidebar__unresponsive_engines">
-                    {% if unresponsive_engines and results|length >= 1 and not results[0].template == 'images.html' %}
-                        <div class="alert alert-danger fade in" role="alert">
-                            <p>{{ _('Engines cannot retrieve results') }}:</p>
-                            {% for engine_name, error_type in unresponsive_engines %}
-                                {{- engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
+            <div id="section__sidebar__unresponsive_engines">
+                {% if unresponsive_engines and results|length >= 1 and not results[0].template == 'images.html' %}
+                    <div class="alert alert-danger fade in" role="alert">
+                        <p>{{ _('Engines cannot retrieve results') }}:</p>
+                        {% for engine_name, error_type in unresponsive_engines %}
+                            {{- engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div id="section__sidebar__infoboxes">
+                {% if infoboxes %}
+                    {% for infobox in infoboxes %}
+                        {% include 'penguin/components/results/infobox.html' %}{{- "\n\n" -}}
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div id="section__sidebar__suggestions">
+                {% if suggestions %}
+                    <div class="suggestion_box">
+
+                        <h1 class="suggestion_box_title">
+                            {{ _('Suggestions') }}
+                        </h1>
+
+                        <div class="suggestion_box_content">
+                            {% for suggestion in suggestions %}
+                                <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
+                                      role="navigation">
+                                    {% if current_language != 'all' %}
+                                        <input type="hidden" name="language" value="{{ current_language }}">
+                                    {% endif %}
+                                    {% if time_range %}
+                                        <input type="hidden" name="time_range" value="{{ time_range }}">
+                                    {% endif %}
+                                    <input type="hidden" name="q" value="{{ suggestion.url }}">
+                                    <button type="submit" class="suggestion_button">{{ suggestion.title }}</button>
+                                </form>
                             {% endfor %}
                         </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {%- endif %}
 
-                <div id="section__sidebar__infoboxes">
-                    {% if infoboxes %}
-                        {% for infobox in infoboxes %}
-                            {% include 'penguin/components/results/infobox.html' %}{{- "\n\n" -}}
-                        {% endfor %}
-                    {% endif %}
-                </div>
+            </div>
 
-                <div id="section__sidebar__suggestions">
-                    {% if suggestions %}
-                        <div class="suggestion_box">
+            <div id="section__sidebar__link">
+                {% if not only_template == 'images' %}
+                    {% include 'penguin/components/results/links.html' %}
+                {% endif %}
+            </div>
 
-                            <h1 class="suggestion_box_title">
-                                {{ _('Suggestions') }}
-                            </h1>
-
-                            <div class="suggestion_box_content">
-                                {% for suggestion in suggestions %}
-                                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                          role="navigation">
-                                        {% if current_language != 'all' %}
-                                            <input type="hidden" name="language" value="{{ current_language }}">
-                                        {% endif %}
-                                        {% if time_range %}
-                                            <input type="hidden" name="time_range" value="{{ time_range }}">
-                                        {% endif %}
-                                        <input type="hidden" name="q" value="{{ suggestion.url }}">
-                                        <button type="submit" class="suggestion_button">{{ suggestion.title }}</button>
-                                    </form>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {%- endif %}
-
-                </div>
-
-                <div id="section__sidebar__link">
-                    {% if not only_template == 'images' %}
-                        {% include 'penguin/components/results/links.html' %}
-                    {% endif %}
-                </div>
-
-                <div id="section__sidebar__result_count">
-                    {% if number_of_results != '0' and not only_template == 'images' %}
-                        <p><small>{{ _('Number of results') }}: {{ number_of_results }}</small></p>
-                    {% endif %}
-                </div>
+            <div id="section__sidebar__result_count">
+                {% if number_of_results != '0' and not only_template == 'images' %}
+                    <p><small>{{ _('Number of results') }}: {{ number_of_results }}</small></p>
+                {% endif %}
+            </div>
 
         </main>
+    </div>
 {% endblock %}

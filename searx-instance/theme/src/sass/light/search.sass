@@ -1,42 +1,67 @@
 $grid-gap: 20px
 
-main#search_content 
+main#search_content
   display: grid
   grid-gap: $grid-gap
-  grid-template-areas: 'results infoboxes' 'results unresponsive_engines' 'results suggestions' 'result link' 'result result_count '
-  grid-template-columns: auto minmax(350px, 500px)
-  grid-template-rows: 100% auto
+  grid-template-columns: 70% 30%
+  margin: 20px
+  @include touch()
+    grid-template-columns: 60% 40%
+    & > *:not(#section__results)
+      justify-self: center
+  @include mobile()
+    grid-template-columns: 100%
+    grid-template-rows: auto
 
-  &.only_template_images 
+  &.only_template_images
     grid-template-areas: 'results' 'sidebar'
     margin-left: $grid-gap
     margin-right: $grid-gap
-  
 
-  #section__results 
-    grid-area: results
-    max-width: 75%
-  
 
-  #section__sidebar__unresponsive_engines 
-    grid-area: unresponsive_engines
-  
+  #section__results
+    grid-column: 1/2
+    grid-row: 1/7
+    // 7 to have one row that is empty in desktop mode so all other rows on the right side will be shown  directly after one another
+    @include mobile()
+      grid-row: 2/3
 
-  #section__sidebar__infoboxes 
-    grid-area: infoboxes
-  
 
-  #section__sidebar__suggestions 
-    grid-area: suggestions
-  
+  #section__sidebar__unresponsive_engines
+    grid-column: 2/3
+    grid-row: 2/3
 
-  #section__sidebar__link 
-    grid-area: link
-  
 
-  #section__sidebar__result_count 
-    grid-area: result_count
-  
+  #section__sidebar__infoboxes
+    grid-column: 2/3
+    grid-row: 1/2
+    @include mobile()
+      grid-column: 1/2
+      grid-row: 1/2
+
+
+  #section__sidebar__suggestions
+    grid-column: 2/3
+    grid-row: 3/4
+    @include mobile()
+      display: none
+
+
+  #section__sidebar__link
+    width: 100%
+    grid-column: 2/3
+    grid-row: 4/5
+    @include mobile()
+      grid-column: 1/2
+      grid-row: 3/4
+
+
+  #section__sidebar__result_count
+    grid-column: 2/3
+    grid-row: 5/6
+    @include mobile()
+      grid-column: 1/2
+      grid-row: 4/5
 
 
 

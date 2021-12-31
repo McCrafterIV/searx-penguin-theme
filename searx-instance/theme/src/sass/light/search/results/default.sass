@@ -2,97 +2,73 @@
 #section__results
   img
     border-radius: $border-radius
-
-
   &:not(.only_template_images)
     margin-top: 20px
     margin-bottom: 20px
-    display: flex
+    display: inline-flex
     flex-direction: column
     grid-gap: 20px
-
     .result
       &:nth-child(1)
         margin-top: 0
-
-
-      .highlight * 
+      .highlight *
         font-weight: bold
         font-size: 10pt
-      
 
-      .result_header 
+      .result_header
         font-size: 16pt !important
-      
 
-      .result-subheader 
+
+      .result-subheader
         font-size: 0pt
 
-        span, time 
+        span, time
           font-size: 10pt
 
-        
 
-        *:not(:last-child):after 
+        *:not(:last-child):after
           content: "•"
           padding: 0 4px
           display: inline-block
-        
-      
 
-      .result-content 
+
+      .result-content
         margin: 0
         font-size: 10pt
-      
 
-      .result-footer 
+
+      .result-footer
         font-size: 10pt !important
 
 
-        .links 
+        .links
           display: flex
           align-items: center
 
-          .favicon 
+          .favicon
             max-height: 20px
             width: auto
             margin-right: 2px
-          
 
-          .external-link 
+
+          .external-link
             text-overflow: ellipsis
             max-inline-size: 60%
             white-space: nowrap
             overflow: hidden
             display: inline-block
             margin-right: 10px
-          
-
-          .internal-links 
+          .internal-links
             display: inline-block
-
-            div 
+            div
               display: flex
-            
-          
-        
-
-
-        .engines 
+        .engines
           display: inline-flex
           gap: 5px
           grid-auto-flow: column
           align-items: end
           text-align: right
           justify-content: flex-end
-
-          span 
+          span
             font-size: 10pt
             font-weight: normal
-          
-        
-
-      
-    
-  
-
