@@ -4,15 +4,19 @@
     border-radius: $border-radius
 
   &:not(.only_template_images)
-    margin-top: 20px
-    margin-bottom: 20px
+    margin-top: $spacing1
+    margin-bottom: $spacing1
     display: inline-flex
     flex-direction: column
     grid-gap: 20px
+    @include mobile()
+      margin-top: $spacing1_touch
+      margin-bottom: $spacing1_touch
 
     .result-divider
       display: none
-      @include touch()
+      margin: 0
+      @include mobile()
         display: block
         width: 100%
         border: .01px $dim-gray solid
@@ -41,6 +45,7 @@
       .result-content
         margin: 0
         font-size: 10pt
+        line-height: 13pt
 
       .result-footer
         font-size: 10pt !important

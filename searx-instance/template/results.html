@@ -33,12 +33,15 @@
     <link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}"
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
-    <div class="container is-max-desktop">
+    <div class="{% if not only_template == 'only_template_images' %}container is-max-desktop{% endif %}">
         <main id="search_content"
-              class="{{ only_template }} {% if not only_template == 'only_template_images' %} {% endif %}">
+              class="{{ only_template }}">
             <section class="{{ only_template }}"
                      id="section__results">
                 {% for result in results -%}
+                    {% if loop.index != 1 %}
+                        <hr class="result-divider">
+                    {% endif %}
                     <div class="result {% if result['template'] %}
                 result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}
                     {% for e in result.engines %} {{ e }}{% endfor %}">
@@ -49,7 +52,6 @@
                             {% include 'penguin/result_templates/default.html' %}
                         {%- endif -%}
                     </div>
-                    <hr class="result-divider">
                 {% endfor %}
 
                 {% if not results and not answers -%}

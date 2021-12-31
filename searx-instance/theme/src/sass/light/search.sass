@@ -1,8 +1,8 @@
-$grid-gap: 20px
-
 main#search_content
   display: grid
-  grid-gap: $grid-gap
+  grid-gap: $spacing1
+  @include mobile()
+    grid-gap: $spacing1_touch
   grid-template-columns: 70% 30%
   margin: 20px
   @include touch()
@@ -12,12 +12,6 @@ main#search_content
   @include mobile()
     grid-template-columns: 100%
     grid-template-rows: auto
-
-  &.only_template_images
-    grid-template-areas: 'results' 'sidebar'
-    margin-left: $grid-gap
-    margin-right: $grid-gap
-
 
   #section__results
     grid-column: 1/2
@@ -70,3 +64,23 @@ main#search_content
     @include mobile()
       grid-row: 3/4
 
+
+  &.only_template_images
+    grid-template-columns: 100%
+    margin-left: $spacing1
+    margin-right: $spacing1
+    @include mobile()
+      margin-left: $spacing1_touch
+      margin-right: $spacing1_touch
+    #section__results
+      grid-column: 1/2
+      grid-row: 1/2
+    #section__results__paging
+      grid-column: 1/2
+      grid-row: 2/3
+    #section__sidebar__link
+      grid-column: 1/2
+      grid-row: 3/4
+    #section__sidebar__result_count
+      grid-column: 1/2
+      grid-row: 4/5
