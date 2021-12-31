@@ -1,14 +1,12 @@
 main#search_content
   display: grid
   grid-gap: $spacing1
-  grid-template-columns: 70% 30%
+  grid-template-columns: 60% 40%
   margin: 20px
   @include mobile()
     grid-gap: $spacing1_touch
     grid-template-columns: 100%
     grid-template-rows: auto
-  @include touch()
-    grid-template-columns: 60% 40%
     & > *:not(#section__results)
       justify-self: center
 
