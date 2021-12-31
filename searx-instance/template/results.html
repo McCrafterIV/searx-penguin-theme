@@ -33,29 +33,19 @@
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
     <main id="search_content"
-          class="
-                  {{ only_template }}{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}">
-        <section class="{{ only_template }}{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}" id="section__results">
-
+          class="{{ only_template }}
+{% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}">
+        <section class="{{ only_template }}
+                {% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}"
+                 id="section__results">
             {% for result in results -%}
-                <div class="result {% if result['template'] %}result-
-
-
-
-
-
-
-
-
-
-
-                    {{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}{% for e in result.engines %} {{ e }}{% endfor %}">
+                <div class="result {% if result['template'] %}
+                result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}
+                    {% for e in result.engines %} {{ e }}{% endfor %}">
                     {%- set index = loop.index -%}
                     {%- if result.template -%}
-                        <h1>{{ result['template'] }}</h1>
                         {% include get_result_template('penguin', result['template']) %}
                     {%- else -%}
-                        <h1>default</h1>
                         {% include 'penguin/result_templates/default.html' %}
                     {%- endif -%}
                 </div>

@@ -26,7 +26,18 @@
       }
 
       .result-subheader {
-        font-size: 10pt;
+        font-size: 0pt;
+
+        span, time {
+          font-size: 10pt;
+
+        }
+
+        *:not(:last-child):after {
+          content: "•";
+          padding: 0 4px;
+          display: inline-block;
+        }
       }
 
       .result-content {
@@ -37,34 +48,50 @@
       .result-footer {
         font-size: 10pt !important;
 
-        .links {
 
+        .links {
+          display: flex;
+          align-items: center;
+
+          .favicon {
+            max-height: 20px;
+            width: auto;
+            margin-right: 2px;
+          }
 
           .external-link {
             text-overflow: ellipsis;
-            width: 300px; // TODO: using 60% doesn't work but a fixed pixel value also isn't a solution
+            max-inline-size: 60%;
             white-space: nowrap;
             overflow: hidden;
+            display: inline-block;
+            margin-right: 10px;
+          }
 
-            img {
-              max-height: 20px;
-              width: auto;
-              margin-right: 2px;
+          .internal-links {
+            display: inline-block;
+
+            div {
+              display: flex;
             }
           }
         }
+
+
         .engines {
-          flex-direction: row;
-          display: inline-grid;
-          grid-gap: 5px;
+          display: inline-flex;
+          gap: 5px;
           grid-auto-flow: column;
           align-items: end;
           text-align: right;
+          justify-content: flex-end;
+
           span {
             font-size: 10pt;
             font-weight: normal;
           }
         }
+
       }
     }
   }

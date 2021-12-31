@@ -1,7 +1,8 @@
 <!-- Draw glyphicon icon from bootstrap-theme -->
 {% macro icon(name, size="24", classes='', nopadding="") -%}
-    <svg class="feather s-{{ size }}{% if classes %} {{ classes }}{% endif %}{% if nopadding != "" %} no-padding{% endif %}">
-        <use href="{{ url_for('static', filename='themes/penguin/img/icons/feather-sprite.svg') }}#{{ name }}"/>
+    <svg class="feather
+    s-{{ size }}{% if classes %} {{ classes }}{% endif %}{% if nopadding != "" %} no-padding{% endif %}">
+        <use href="{{ url_for('static', filename='themes/penguin/img/icons/feather-sprite.svg') }}#{{ name }}"></use>
     </svg>
 {%- endmacro %}
 
@@ -11,11 +12,17 @@
          src="{{ url_for('static', filename='themes/penguin/img/icons/' + favicon + '.png') }}" alt="{{ favicon }}"/>
 {%- endmacro %}
 
-{%- macro result_link(url, title, classes='', id='') -%}
+{%- macro result_link(url, title, classes='', id='', useDiv=false) -%}
     <a href="{{ url }}" {% if classes %}class="{{ classes }}" {% endif %}{% if results_on_new_tab %}target="_blank"
        rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}{% if id %}
        aria-labelledby="result-{{ id }}"{% endif %}>
+        {% if useDiv %}
+            <div>
+        {% endif %}
         {{ title }}
+        {% if useDiv %}
+            </div>
+        {% endif %}
     </a>
 {%- endmacro -%}
 
@@ -36,59 +43,84 @@
 <!-- Draw result sub header -->
 {% macro result_sub_header(result, id) -%}
     <div class="result-subheader" id="result-subheader-{{ id }}">
-        {%- if result.publishedDate %}
-            <time class="text-muted" datetime="{{ result.pubdate }}">{{ result.publishedDate }}</time>{% endif -%}
-        {%- if result.magnetlink %}
-            <small>
-                {{ result_link(result.magnetlink, icon('link', 16) + _('magnet link'), "magnetlink", id) }}</small>
+        {% if result.length %}
+            <span class="text-muted">{{ result.length }}</span>
         {% endif -%}
-        {%- if result.torrentfile %}<small>
-            {{ result_link(result.torrentfile, icon('link', 16) + _('torrent file'), "torrentfile", id) }}</small>
+        {% if result.publishedDate %}
+            <time class="text-muted" datetime="{{ result.pubdate }}">{{ result.publishedDate }}</time>
+        {% endif %}
+        {%- if result.author %}
+            <span class="text-muted">{{ result.author }}</span>
         {% endif -%}
+        {% if result.magnetlink %}
+            <span>
+                {{ result_link(result.magnetlink, icon('link', 16) + _('magnet link'), "magnetlink", id) }}</span>
+        {% endif %}
+        {%- if result.torrentfile %}
+            <span>
+            {{ result_link(result.torrentfile, icon('link', 16) + _('torrent file'), "torrentfile", id) }}</span>
+        {% endif %}
     </div>
 {%- endmacro %}
 
-<!-- Draw result footer -->
-{% macro result_footer(result, id) -%}
-    <div class="result-footer columns" id="result-footer-{{ id }}">
-        {%- if result.pretty_url -%}
-            <div class="links column is-two-thirds">
-                {#            {% if result.engine~".png" in favicons %}#}
-                {#                {{ draw_favicon(result.engine) }}#}
-                {#            {% endif %}#}
-                <div class="external-link">
-                    {{ result_link(result.url, result.url) }}
-                </div>
-                <div class="internal-links">
-                    {%- if result.url -%}
-                        {%- if result.cached_url -%}
-                            <small>{{ result_link(result.cached_url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
-                        {%- elif not result.is_onion -%}
-                            <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link', 16) + _('cached'), "result-link", id) }}</small>
-                        {%- endif -%}
-                    {%- endif -%}
-                    {%- if proxify -%}
-                        <small>
-                            {{ result_link(proxify(result.url), icon('sort') + _('link'), "text-info", id) }}
-                        </small>
-                    {%- endif -%}
-                </div>
-            </div>
+{% macro _result_footer_internal_links(result, id, classes='') %}
+    <div class="internal-links {{ classes }}">
+        {%- if result.url -%}
+            {%- if result.cached_url -%}
+                {{ result_link(result.cached_url, icon('link', 16, 'small-padding') + _('cached'), "result-link", id, true) }}
+            {%- elif not result.is_onion -%}
+                {{ result_link("https://web.archive.org/web/" + result.url, icon('link', 16, 'small-padding') + _('cached'), "result-link", id, true) }}
+            {%- endif -%}
         {%- endif -%}
-
-        <div class="engines column{% if result.engines|length > 2 %} tooltip{% endif %}">
-            {% if result.engines|length > 2 %}
-                <span title="{% for engine in result.engines %} {{ engine }} {% endfor %}">
+        {%- if proxify -%}
+            <small>
+                {{ result_link(proxify(result.url), icon('sort', 16, 'small-padding') + _('link'), "text-info", id, true) }}
+            </small>
+        {%- endif -%}
+    </div>
+{% endmacro %}
+{% macro _result_footer_external_link(result, classes='') %}
+    {% if result.engine~".png" in favicons %}
+        {{ draw_favicon(result.engine) }}
+    {% endif %}
+    {{ result_link(result.url, result.url, "external-link " + classes) }}
+{% endmacro %}
+{% macro _result_footer_engines(result, classes='') %}
+    <div class="engines{% if result.engines|length > 2 %} tooltip{% endif %} {{ classes }}">
+        {% if result.engines|length > 2 %}
+            <span title="{% for engine in result.engines %} {{ engine }} {% endfor %}">
                     {{ result.engines|first }} ...
                 </span>
-            {% else %}
-                {%- for engine in result.engines -%}
-                    <span>
+        {% else %}
+            {%- for engine in result.engines -%}
+                <span>
                     {{ engine }}
                 </span>
-                {%- endfor -%}
-            {% endif %}
-        </div>
+            {%- endfor -%}
+        {% endif %}
+    </div>
+{% endmacro %}
+<!-- Draw result footer -->
+<!-- styles: wide, small -->
+{% macro result_footer(result, id, style="wide") -%}
+    <div class="result-footer {% if style == "wide" %}columns{% endif %}"
+         id="result-footer-{{ id }}">
+        {% if style == "wide" %}
+            {%- if result.pretty_url -%}
+                <div class="links column is-two-thirds">
+                    {{ _result_footer_external_link(result) }}
+                    {{ _result_footer_internal_links(result, id) }}
+                </div>
+            {%- endif -%}
+            {{ _result_footer_engines(result, "column") }}
+        {% else %}
+            <div>
+                {{ _result_footer_external_link(result) }}
+            </div>
+            <div>
+                {{ _result_footer_engines(result) }} {{ _result_footer_internal_links(result, id) }}
+            </div>
+        {% endif %}
     </div>
 {%- endmacro %}
 

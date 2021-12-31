@@ -1,0 +1,18 @@
+{
+  'url': 'https://en.wikipedia.org/wiki/Dog',
+  'title': '<span class="highlight">Dog</span>',
+  'engine': 'wikipedia',
+  'parsed_url': ParseResult(scheme='https', netloc='en.wikipedia.org', path='/wiki/Dog', params='', query='', fragment=''),
+  'engines': {'brave', 'wikidata', 'google', 'wikipedia'},
+  'positions': [1, 1, 5, 1],
+  'content': 'August 11, 2021 - The <span class="highlight">dog</span> (Canis familiaris) is a domesticated descendant of the wolf, characterized by an upturning tail. The <span class="highlight">dog</span> derived from an ancient, extinct wolf, and the modern grey wolf is the <span class="highlight">dog</span>&#x27;s nearest living relative. The <span class="highlight">dog</span> was the first species to be domesticated, by hunter–gatherers over ...',
+  'is_onion': False,
+  'score': 25.6,
+  'category': 'general',
+  'pretty_url': 'https://en.wikipedia.org/wiki/Dog'
+}
+
+
+
+
+{'url': 'https://dialup.express/videos/watch/686db467-b24f-4e82-aeea-e5a25b689a7c', 'title': 'mozart <span class="highlight">dog</span>', 'content': 'bork', 'author': 'vantablack', 'length': '0:30', 'template': 'videos.html', 'publishedDate': 'Jun 19, 2018', 'embedded': '<iframe width="540" height="304" src="https://dialup.express/videos/embed/686db467-b24f-4e82-aeea-e5a25b689a7c" frameborder="0" allowfullscreen></iframe>', 'thumbnail': 'https://dialup.express/static/thumbnails/686db467-b24f-4e82-aeea-e5a25b689a7c.jpg', 'engine': 'sepiasearch', 'parsed_url': ParseResult(scheme='https', netloc='dialup.express', path='/videos/watch/686db467-b24f-4e82-aeea-e5a25b689a7c', params='', query='', fragment=''), 'engines': {'sepiasearch'}, 'positions': [1], 'score': 1.0, 'category': 'videos', 'pretty_url': 'https://dialup.express/videos/watch/686db467-b24f-4e82-aeea-e5a25b689a7c', 'pubdate': '2018-06-19 04:57:44+0000'}

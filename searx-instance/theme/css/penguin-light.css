@@ -18,7 +18,10 @@
   height: 16px;
 }
 .feather.no-padding {
-  padding: 0;
+  margin: 0;
+}
+.feather.small-padding {
+  margin: 0 5px;
 }
 .hidden {
   display: none;
@@ -28,6 +31,10 @@
 }
 .visually-hidden {
   display: none;
+}
+a.link-wrapper {
+  display: flex;
+  align-items: center;
 }
 .searx-navbar {
   overflow-x: auto;
@@ -906,7 +913,16 @@ th:hover .engine-tooltip,
   font-size: 16pt !important;
 }
 #section__results:not(.only_template_images) .result .result-subheader {
+  font-size: 0pt;
+}
+#section__results:not(.only_template_images) .result .result-subheader span,
+#section__results:not(.only_template_images) .result .result-subheader time {
   font-size: 10pt;
+}
+#section__results:not(.only_template_images) .result .result-subheader *:not(:last-child):after {
+  content: "•";
+  padding: 0 4px;
+  display: inline-block;
 }
 #section__results:not(.only_template_images) .result .result-content {
   margin: 0;
@@ -915,24 +931,36 @@ th:hover .engine-tooltip,
 #section__results:not(.only_template_images) .result .result-footer {
   font-size: 10pt !important;
 }
-#section__results:not(.only_template_images) .result .result-footer .links .external-link {
-  text-overflow: ellipsis;
-  width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
+#section__results:not(.only_template_images) .result .result-footer .links {
+  display: flex;
+  align-items: center;
 }
-#section__results:not(.only_template_images) .result .result-footer .links .external-link img {
+#section__results:not(.only_template_images) .result .result-footer .links .favicon {
   max-height: 20px;
   width: auto;
   margin-right: 2px;
 }
+#section__results:not(.only_template_images) .result .result-footer .links .external-link {
+  text-overflow: ellipsis;
+  max-inline-size: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 10px;
+}
+#section__results:not(.only_template_images) .result .result-footer .links .internal-links {
+  display: inline-block;
+}
+#section__results:not(.only_template_images) .result .result-footer .links .internal-links div {
+  display: flex;
+}
 #section__results:not(.only_template_images) .result .result-footer .engines {
-  flex-direction: row;
-  display: inline-grid;
-  grid-gap: 5px;
+  display: inline-flex;
+  gap: 5px;
   grid-auto-flow: column;
   align-items: end;
   text-align: right;
+  justify-content: flex-end;
 }
 #section__results:not(.only_template_images) .result .result-footer .engines span {
   font-size: 10pt;
