@@ -3,8 +3,8 @@
 main#search_content {
   display: grid;
   grid-gap: @grid-gap;
-  grid-template-areas: 'results sidebar' 'results clear';
-  grid-template-columns: auto minmax(350px 5  00px);
+  grid-template-areas: 'results infoboxes' 'results unresponsive_engines' 'results suggestions' 'result link' 'result result_count ';
+  grid-template-columns: auto minmax(350px 5 00px);
   grid-template-rows: 100% auto;
 
   &.only_template_images {
@@ -15,38 +15,27 @@ main#search_content {
 
   #section__results {
     grid-area: results;
+    max-width: 75%;
   }
 
-  #section__sidebar {
-    grid-area: sidebar;
+  #section__sidebar__unresponsive_engines {
+    grid-area: unresponsive_engines;
+  }
 
-    display: inline-flex;
-    flex-direction: column;
-    grid-gap: @grid-gap;
+  #section__sidebar__infoboxes {
+    grid-area: infoboxes;
+  }
 
-    & + #section_results.only_template_images {
-      background-color: red;
-    }
+  #section__sidebar__suggestions {
+    grid-area: suggestions;
+  }
 
-    #sidebar__unresponsive_engines {
-      grid-area: unresponsive_engines;
-    }
+  #section__sidebar__link {
+    grid-area: link;
+  }
 
-    #sidebar__infoboxes {
-      grid-area: infoboxes;
-    }
-
-    #sidebar__suggestions {
-      grid-area: suggestions;
-    }
-
-    #sidebar__link {
-      grid-area: link;
-    }
-
-    #sidebar__result_count {
-      grid-area: result_count;
-    }
+  #section__sidebar__result_count {
+    grid-area: result_count;
   }
 }
 

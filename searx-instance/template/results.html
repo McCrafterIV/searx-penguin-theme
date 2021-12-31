@@ -32,11 +32,9 @@
     <link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}"
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
-    <div class="container">
         <main id="search_content"
-              class="columns {{ only_template }} {% if not only_template == 'only_template_images' %} {% endif %}">
-            <section class="{{ only_template }} column is-three-quarters
-                {% if not only_template == 'only_template_images' %} container is-max-desktop{% endif %}"
+              class="container {{ only_template }} {% if not only_template == 'only_template_images' %} {% endif %}">
+            <section class="{{ only_template }}"
                      id="section__results">
                 {% for result in results -%}
                     <div class="result {% if result['template'] %}
@@ -120,8 +118,7 @@
                 {% endif %}
             </section><!-- /#main_results -->
 
-            <section id="section__sidebar" class="column">
-                <div id="sidebar__unresponsive_engines">
+                <div id="section__sidebar__unresponsive_engines">
                     {% if unresponsive_engines and results|length >= 1 and not results[0].template == 'images.html' %}
                         <div class="alert alert-danger fade in" role="alert">
                             <p>{{ _('Engines cannot retrieve results') }}:</p>
@@ -132,7 +129,7 @@
                     {% endif %}
                 </div>
 
-                <div id="sidebar__infoboxes">
+                <div id="section__sidebar__infoboxes">
                     {% if infoboxes %}
                         {% for infobox in infoboxes %}
                             {% include 'penguin/components/results/infobox.html' %}{{- "\n\n" -}}
@@ -140,7 +137,7 @@
                     {% endif %}
                 </div>
 
-                <div id="sidebar__suggestions">
+                <div id="section__sidebar__suggestions">
                     {% if suggestions %}
                         <div class="suggestion_box">
 
@@ -168,20 +165,17 @@
 
                 </div>
 
-                <div id="sidebar__link">
+                <div id="section__sidebar__link">
                     {% if not only_template == 'images' %}
                         {% include 'penguin/components/results/links.html' %}
                     {% endif %}
                 </div>
 
-                <div id="sidebar__result_count">
+                <div id="section__sidebar__result_count">
                     {% if number_of_results != '0' and not only_template == 'images' %}
                         <p><small>{{ _('Number of results') }}: {{ number_of_results }}</small></p>
                     {% endif %}
                 </div>
-            </section>
-
 
         </main>
-    </div>
 {% endblock %}
