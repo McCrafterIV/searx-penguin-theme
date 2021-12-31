@@ -1,17 +1,30 @@
 .advanced-header 
   border-bottom: $gray 1px solid
-
-
+  @include touch()
+    padding: 0 $spacing1
 #categories 
   display: flex
   flex-direction: row
-  flex-wrap: wrap
+  flex-wrap: nowrap
+  overflow-y: auto
+
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar
+   display: none
+  /* Hide scrollbar for IE, Edge add Firefox
+  -ms-overflow-style: none
+  scrollbar-width: none /* Firefox */
 
   .category 
     display: inline-block
     margin: 0 20px
+    @include touch()
+      margin: 0 10px
     position: relative
     padding-bottom: 5px
+    width: auto
+    white-space: nowrap
     &:nth-child(1)
       margin-left: 0 !important
     
