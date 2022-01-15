@@ -58,34 +58,34 @@
                     {% include 'penguin/messages/no_results.html' %}
                 {% endif %}
 
-                <div class="clearfix"></div>
 
-                {% if paging -%}
-                    <section id="section__results__paging">
-                        {% if pageno != 1 %}
-                            <div class="pull-left">
-                                <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
-                                    {{- search_form_attrs(pageno-1) -}}
-                                    {{- engine_data_form(engine_data) -}}
-                                    <button type="submit" class="button">
-                                        {{ icon('chevron-left', 20, "no-padding") }} {{ _('Previous page') }}
-                                    </button>
-                                </form>
-                            </div>
-                        {% endif %}
-                        <div class="pull-right">
-                            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
-                                  class="pull-left">
-                                {{- search_form_attrs(pageno + 1) -}}
+            </section><!-- /#main_results -->
+
+            {% if paging -%}
+                <section id="section__results__paging">
+                    {% if pageno != 1 %}
+                        <div class="pull-left">
+                            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+                                {{- search_form_attrs(pageno-1) -}}
                                 {{- engine_data_form(engine_data) -}}
                                 <button type="submit" class="button">
-                                    {{ _('Next page') }} {{ icon('chevron-right', 20, "no-padding") }}
+                                    {{ icon('chevron-left', 20, "no-padding") }} {{ _('Previous page') }}
                                 </button>
                             </form>
                         </div>
-                    </section>
-                {% endif %}
-            </section><!-- /#main_results -->
+                    {% endif %}
+                    <div class="pull-right">
+                        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"
+                              class="pull-left">
+                            {{- search_form_attrs(pageno + 1) -}}
+                            {{- engine_data_form(engine_data) -}}
+                            <button type="submit" class="button">
+                                {{ _('Next page') }} {{ icon('chevron-right', 20, "no-padding") }}
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            {% endif %}
 
             <div id="section__sidebar__unresponsive_engines">
                 {% if unresponsive_engines and results|length >= 1 and not results[0].template == 'images.html' %}

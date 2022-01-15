@@ -63,6 +63,10 @@ main#search_content
   #section__results__paging
     grid-column: 1/2
     grid-row: 7/8
+    justify-content: center
+    .pull-left, .pull-right
+      margin-left: 0
+      margin-right: 0
     @include mobile()
       grid-row: 3/4
 
@@ -74,22 +78,26 @@ main#search_content
     @include mobile()
       margin-left: $spacing1_touch
       margin-right: $spacing1_touch
+
     #section__results
       grid-column: 1/2
       grid-row: 1/2
+
     #section__results__paging
       grid-column: 1/2
       grid-row: 2/3
+
     #section__sidebar__link
       grid-column: 1/2
       grid-row: 3/4
+
     #section__sidebar__result_count
       grid-column: 1/2
       grid-row: 4/5
 
-    #section__results
-      grid-column: 1/2
-      grid-row: 1/7
-      // 7 to have one row that is empty in desktop mode so all other rows on the right side will be shown  directly after one another
-      @include mobile()
-        grid-row: 2/3
+    //#section__results
+    //  grid-column: 1/2 !important
+    //  grid-row: 1/7 !important
+    //  // 7 to have one row that is empty in desktop mode so all other rows on the right side will be shown  directly after one another
+    //  @include mobile()
+    //    grid-row: 2/3 !important

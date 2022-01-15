@@ -13,8 +13,8 @@
 {% if result.img_src or result.thumbnail %}<div class="columns">{% endif %}
     {%- if result.img_src or result.thumbnail -%}
         <div class="column is-one-fifth">
-            <img src="{{ image_proxify(result.img_src or result.thumbnail) }}" title="{{ result.title|striptags }}"
-                 class="">
+            <div style="background-image: url('{{ image_proxify(result.img_src or result.thumbnail) }}')"
+                 class="result-image">
         </div>
     {% endif -%}
 
