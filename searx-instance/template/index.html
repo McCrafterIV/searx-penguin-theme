@@ -2,7 +2,7 @@
 {% block body %}
     {% include 'penguin/components/index/navbar.html' %}
 
-    <div class="container is-max-desktop has-text-centered is-vcentered">
+    <div class="container is-max-desktop has-text-centered centered_search_form">
             <img id="main-logo" class="mb-6" src="{{ url_for('static', filename='themes/penguin/img/logo_searx_a.png') }}"
                  alt="searx logo"/>
         {% include 'penguin/components/search_form.html' %}
