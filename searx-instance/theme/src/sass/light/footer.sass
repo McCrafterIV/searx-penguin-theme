@@ -4,24 +4,20 @@ html
   min-height: 100%
   color: $black
 
-
+$footer_height: 130px
 body 
   /* Margin bottom by footer height */
   font-family: 'Roboto', Helvetica, Arial, sans-serif
-  margin-bottom: 80px
   background-color: white
-
-  a
-      color: $blue
-  
+  margin-bottom: $footer_height
 
 
-.footer 
+#page_footer
   position: absolute
   bottom: 0
   width: 100%
-  /* Set the fixed height of the footer here */
-  height: 60px
   text-align: center
-  color: #999
-
+  border-top: 2px $gray solid
+  padding-top: 30px
+  padding-bottom: 30px
+  font-size: 10pt

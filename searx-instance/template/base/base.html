@@ -19,7 +19,8 @@
               type="text/css"/>
     {%- else -%}
         {{ '    ' }}
-        <link rel="stylesheet" href="{{ url_for('static', filename='themes/penguin/css/penguin-light.min.css') }}" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='themes/penguin/css/penguin-light.min.css') }}"
+              type="text/css"/>
     {%- endif %}
 
     {% set templates = results|map(attribute='template')|unique|list -%}
@@ -47,6 +48,7 @@
             .show_if_js {
                 display: none !important;
             }
+
             .show_if_no_js {
                 display: block !important;
             }
@@ -54,10 +56,18 @@
     </noscript>
 </head>
 <body class="{{ endpoint }}_endpoint">
-
-{% block body %}
-{% endblock %}
-
+<section id="page_body">
+    {% block body %}
+    {% endblock %}
+</section>
+<section id="page_footer" {% if endpoint == "index" %}class="borderless"{% endif %}>
+    {{ _('Powered by') }} <a href="{{ brand.DOCS_URL }}">searx</a> - {{ searx_version }}
+    - {{ _('a privacy-respecting, hackable metasearch engine') }}<br/>
+    <a href="{{ brand.GIT_URL }}">{{ _('Source code') }}</a> |
+    <a href="{{ brand.ISSUE_URL }}">{{ _('Issue tracker') }}</a> |
+    <a href="{{ brand.PUBLIC_INSTANCES }}">{{ _('Public instances') }}</a>{% if brand.CONTACT_URL %} |
+    <a href="{{ brand.CONTACT_URL }}">{{ _('Contact instance maintainer') }}</a>{% endif %}
+</section>
 
 <script src="{{ url_for('static', filename='themes/penguin/js/jquery.min.js') }}"></script>
 {% if load_leaflet %}{{ "    " }}
