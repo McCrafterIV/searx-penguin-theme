@@ -12,13 +12,13 @@
 
 {% if result.img_src or result.thumbnail %}<div class="columns is-mobile">{% endif %}
     {%- if result.img_src or result.thumbnail -%}
-        <div class="column is-tow-fifths">
+        <div class="column is-tow-fifths-mobile is-one-fifth-tablet">
             <div style="background-image: url('{{ image_proxify(result.img_src or result.thumbnail) }}')"
                  class="result-image"></div>
         </div>
     {% endif -%}
 
-    {% if result.img_src or result.thumbnail %}<div class="column is-three-fifths" >{% endif %}
+    {% if result.img_src or result.thumbnail %}<div class="column is-three-fifths-mobile is-four-fifths-tablet" >{% endif %}
         {{- result_header(result, favicons, loop.index) -}}
         <br>
         {{- result_sub_header(result, loop.index) -}}

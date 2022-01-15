@@ -33,7 +33,7 @@
     <link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}"
           href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
-    <div class="{% if not only_template == 'only_template_images' %}container is-max-desktop{% endif %}">
+    <div class="{% if not only_template == 'only_template_images' %}container is-widescreen{% endif %}">
         <main id="search_content"
               class="{{ only_template }}">
             <section class="{{ only_template }}"
