@@ -173,24 +173,24 @@
 
 {% macro preferences_item_header(info, label, rtl, id) -%}
     {%- if rtl -%}
-        <div class="row form-group">{{- "" -}}
-        <label class="col-sm-3 col-md-2 pull-right"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
-        <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>{{- "" -}}
-        <div class="col-sm-4 col-md-4">
+        <div class="columns is-multiline">{{- "" -}}
+        <label class="column is-3"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
+        <span class="column help-block pull-left">{{ info }}</span>{{- "" -}}
+        <div class="column is-9">
     {%- else -%}
-        <div class="row form-group">{{- "" -}}
-        <label class="col-sm-3 col-md-2"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
-        <div class="col-sm-4 col-md-4">
+        <div class="columns is-multiline">
+        <label class="column is-3"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
+        <div class="column is-9">
     {%- endif -%}
 {%- endmacro %}
 
 {% macro preferences_item_footer(info, label, rtl) -%}
     {%- if rtl -%}
-        </div>{{- "" -}}
+        </div>
         </div>
     {%- else -%}
+        <span >{{ info }}</span>{{- "" -}}
         </div>
-        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>{{- "" -}}
         </div>
     {%- endif -%}
 {%- endmacro %}
