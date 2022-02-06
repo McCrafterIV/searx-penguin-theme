@@ -1,5 +1,5 @@
 {% from 'penguin/base/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle, support_toggle, custom_select_class %}
-{% extends "penguin/base/base.html" %}
+{% extends "penguin/base/extended_base_without_categories.html" %}
 {% macro engine_about(search_engine, id) -%}
     {% if search_engine.about is defined %}
         {% set about = search_engine.about %}
@@ -14,456 +14,445 @@
     {%- endif -%}
 {%- endmacro %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
-{% block body %}
+{% block content %}
 
     <div class="container">
-
-        <h1>{{ _('Preferences') }}</h1>
         <form method="post" action="{{ url_for('preferences') }}" id="search_form">
-            <div class="columns">
-                <!-- Navigation -->
-                <div id="preferences-navigation" class="column is-3-tablet is-2-desktop">
-                    <div class="columns is-multiline">
-                        <div class="column is-12-tablet">
-                            <a href="#section-general" role="tab" data-toggle="tab">{{ _('General') }}</a>
-                        </div>
-                        <div class="column is-12-tablet">
-                            <a href="#section-engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a>
-                        </div>
-                        <div class="column is-12-tablet">
-                            <a href="#section-plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a>
-                        </div>
+            <div>
+                <div class="tabbed">
+                    <input type="radio" name="category-select" id="category-general" checked>
+                    <input type="radio" name="category-select" id="category-engines">
+                    <input type="radio" name="category-select" id="category-plugins">
+                    {% if answerers %}
+                        <input type="radio" name="category-select" id="category-answers">
+                    {% endif %}
+                    <input type="radio" name="category-select" id="category-cookies">
+
+                    <ul class="tabs">
+                        <li class="tab">
+                            <label for="category-general">{{ _('General') }}</label>
+                        </li>
+                        <li class="tab">
+                            <label for="category-engines">{{ _('Engines') }}</label>
+                        </li>
+                        <li class="tab">
+                            <label for="category-plugins">{{ _('Plugins') }}</label>
+                        </li>
                         {% if answerers %}
-                            <div class="column is-12-tablet">
-                                <a href="#section-answers" role="tab" data-toggle="tab">{{ _('Answerers') }}</a>
-                            </div>
+                            <li class="tab">
+                                <label for="category-answers">{{ _('Answers') }}</label>
+                            </li>
                         {% endif %}
-                        <div class="column is-12-tablet">
-                            <a href="#section-cookies" role="tab" data-toggle="tab">{{ _('Cookies') }}</a>
-                        </div>
-                    </div>
-                </div>
+                        <li class="tab">
+                            <label for="category-cookies">{{ _('Cookies') }}</label>
+                        </li>
+                    </ul>
 
-                <!-- Settings list -->
-                <div class="column is-9-tablet is-10-desktop">
-                    <!-- Settings -->
-                    <div class="section" id="section-general">
-                        <h3>{{ _('General') }}</h3>
-                        <div>
-                            <fieldset>
-                                <div class="container-fluid">
-                                    {% if 'categories' not in locked_preferences %}
-                                        <div class="columns">
-                                            {% if rtl %}
-                                                <div class="column">
-                                                    {% include 'penguin/components/categories.html' %}
-                                                </div>
-                                                <label class="column"
-                                                       for="categories">{{ _('Default categories') }}</label>
-                                            {% else %}
-                                                <label class="column"
-                                                       for="categories">{{ _('Default categories') }}</label>
-                                                <div class="column search-categories">
-                                                    {% include 'penguin/components/categories.html' %}
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    {% if 'language' not in locked_preferences %}
-                                        {% set language_label = _('Search language') %}
-                                        {% set language_info = _('What language do you prefer for search?') %}
-                                        {{ preferences_item_header(language_info, language_label, rtl, 'language') }}
-                                        {% include 'penguin/components/languages.html' %}
-                                        {{ preferences_item_footer(language_info, language_label, rtl) }}
-                                    {% endif %}
+                    <!-- General -->
+                    <div class="tab-content">
+                        <fieldset>
+                            <div class="container-fluid">
+                                {% if 'categories' not in locked_preferences %}
+                                    <div class="columns preference-entry">
+                                        {% if rtl %}
+                                            <div class="column">
+                                                {% include 'penguin/components/categories.html' %}
+                                            </div>
+                                            <label class="column"
+                                                   for="categories">{{ _('Default categories') }}</label>
+                                        {% else %}
+                                            <label class="column"
+                                                   for="categories">{{ _('Default categories') }}</label>
+                                            <div class="column search-categories">
+                                                {% include 'penguin/components/categories.html' %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if 'language' not in locked_preferences %}
+                                    {% set language_label = _('Search language') %}
+                                    {% set language_info = _('What language do you prefer for search?') %}
+                                    {{ preferences_item_header(language_info, language_label, rtl, 'language') }}
+                                    {% include 'penguin/components/languages.html' %}
+                                    {{ preferences_item_footer(language_info, language_label, rtl) }}
+                                {% endif %}
 
-                                    {% if 'locale' not in locked_preferences %}
-                                        {% set locale_label = _('Interface language') %}
-                                        {% set locale_info = _('Change the language of the layout') %}
-                                        {{ preferences_item_header(locale_info, locale_label, rtl, 'locale') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="locale"
-                                                id="locale">
-                                            {% for locale_id,locale_name in locales.items() | sort %}
-                                                <option value="{{ locale_id }}"
-                                                        {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        {{ preferences_item_footer(locale_info, locale_label, rtl) }}
-                                    {% endif %}
+                                {% if 'locale' not in locked_preferences %}
+                                    {% set locale_label = _('Interface language') %}
+                                    {% set locale_info = _('Change the language of the layout') %}
+                                    {{ preferences_item_header(locale_info, locale_label, rtl, 'locale') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="locale"
+                                            id="locale">
+                                        {% for locale_id,locale_name in locales.items() | sort %}
+                                            <option value="{{ locale_id }}"
+                                                    {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {{ preferences_item_footer(locale_info, locale_label, rtl) }}
+                                {% endif %}
 
-                                    {% if 'autocomplete' not in locked_preferences %}
-                                        {% set autocomplete_label = _('Autocomplete') %}
-                                        {% set autocomplete_info = _('Find stuff as you type') %}
-                                        {{ preferences_item_header(autocomplete_info, autocomplete_label, rtl, 'autocomplete') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="autocomplete"
-                                                id="autocomplete">
-                                            <option value=""> -</option>
-                                            {% for backend in autocomplete_backends %}
-                                                <option value="{{ backend }}"
-                                                        {% if backend == autocomplete %}selected="selected"{% endif %}>{{ backend }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        {{ preferences_item_footer(autocomplete_info, autocomplete_label, rtl) }}
-                                    {% endif %}
+                                {% if 'autocomplete' not in locked_preferences %}
+                                    {% set autocomplete_label = _('Autocomplete') %}
+                                    {% set autocomplete_info = _('Find stuff as you type') %}
+                                    {{ preferences_item_header(autocomplete_info, autocomplete_label, rtl, 'autocomplete') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="autocomplete"
+                                            id="autocomplete">
+                                        <option value=""> -</option>
+                                        {% for backend in autocomplete_backends %}
+                                            <option value="{{ backend }}"
+                                                    {% if backend == autocomplete %}selected="selected"{% endif %}>{{ backend }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {{ preferences_item_footer(autocomplete_info, autocomplete_label, rtl) }}
+                                {% endif %}
 
-                                    {% if 'image_proxy' not in locked_preferences %}
-                                        {% set image_proxy_label = _('Image proxy') %}
-                                        {% set image_proxy_info = _('Proxying image results through searx') %}
-                                        {{ preferences_item_header(image_proxy_info, image_proxy_label, rtl, 'image_proxy') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="image_proxy"
-                                                id="image_proxy">
-                                            <option value="1"
-                                                    {% if image_proxy %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
-                                            <option value=""
-                                                    {% if not image_proxy %}selected="selected"{% endif %}>{{ _('Disabled') }}</option>
-                                        </select>
-                                        {{ preferences_item_footer(image_proxy_info, image_proxy_label, rtl) }}
-                                    {% endif %}
-
-                                    {% if 'method' not in locked_preferences %}
-                                        {% set method_label = _('Method') %}
-                                        {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') %}
-                                        {{ preferences_item_header(method_info, method_label, rtl, 'method') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="method"
-                                                id="method">
-                                            <option value="POST"
-                                                    {% if method == 'POST' %}selected="selected"{% endif %}>
-                                                POST
-                                            </option>
-                                            <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>
-                                                GET
-                                            </option>
-                                        </select>
-                                        {{ preferences_item_footer(method_info, method_label, rtl) }}
-                                    {% endif %}
-
-                                    {% if 'safesearch' not in locked_preferences %}
-                                        {% set safesearch_label = _('SafeSearch') %}
-                                        {% set safesearch_info = _('Filter content') %}
-                                        {{ preferences_item_header(safesearch_info, safesearch_label, rtl, 'safesearch') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="safesearch"
-                                                id="safesearch">
-                                            <option value="2"
-                                                    {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
-                                            <option value="1"
-                                                    {% if safesearch == '1' %}selected="selected"{% endif %}>{{ _('Moderate') }}</option>
-                                            <option value="0"
-                                                    {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
-                                        </select>
-                                        {{ preferences_item_footer(safesearch_info, safesearch_label, rtl) }}
-                                    {% endif %}
-
-                                    {% if 'theme' not in locked_preferences %}
-                                        {% set theme_label = _('Themes') %}
-                                        {% set theme_info = _('Change searx layout') %}
-                                        {{ preferences_item_header(theme_info, theme_label, rtl, 'theme') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="theme"
-                                                id="theme">
-                                            {% for name in themes %}
-                                                <option value="{{ name }}"
-                                                        {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        {{ preferences_item_footer(theme_info, theme_label, rtl) }}
-                                    {% endif %}
-
-                                    {% if 'penguin-style' not in locked_preferences %}
-                                        {{ preferences_item_header(_('Choose style for this theme'), _('Style'), rtl, 'penguin_style') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="penguin-style"
-                                                id="penguin_style">
-                                            <option value="light"
-                                                    {% if preferences.get_value('penguin-style') == 'light' %}selected="selected"{% endif %}>
-                                                Light
-                                            </option>
-                                            <option value="dark"
-                                                    {% if preferences.get_value('penguin-style') == 'dark' %}selected="selected"{% endif %}>
-                                                Dark
-                                            </option>
-                                        </select>
-                                        {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
-                                    {% endif %}
-
-                                    {% if 'results_on_new_tab' not in locked_preferences %}
-                                        {% set label = _('Results on new tabs') %}
-                                        {% set info = _('Open result links on new browser tabs') %}
-                                        {{ preferences_item_header(info, label, rtl, 'results_on_new_tab') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}"
-                                                name="results_on_new_tab"
-                                                id="results_on_new_tab">
-                                            <option value="1"
-                                                    {% if results_on_new_tab %}selected="selected"{% endif %}>{{ _('On') }}</option>
-                                            <option value="0"
-                                                    {% if not results_on_new_tab %}selected="selected"{% endif %}>{{ _('Off') }}</option>
-                                        </select>
-                                        {{ preferences_item_footer(info, label, rtl) }}
-                                    {% endif %}
-
-                                    {% set label = _('Show advanced settings') %}
-                                    {% set info = _('Show advanced settings panel in the home page by default') %}
-                                    {{ preferences_item_header(info, label, rtl, 'advanced_search') }}
-                                    <select class="form-control {{ custom_select_class(rtl) }}" name="advanced_search"
-                                            id="advanced_search">
+                                {% if 'image_proxy' not in locked_preferences %}
+                                    {% set image_proxy_label = _('Image proxy') %}
+                                    {% set image_proxy_info = _('Proxying image results through searx') %}
+                                    {{ preferences_item_header(image_proxy_info, image_proxy_label, rtl, 'image_proxy') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="image_proxy"
+                                            id="image_proxy">
                                         <option value="1"
-                                                {% if preferences.get_value('advanced_search') %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                                                {% if image_proxy %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
+                                        <option value=""
+                                                {% if not image_proxy %}selected="selected"{% endif %}>{{ _('Disabled') }}</option>
+                                    </select>
+                                    {{ preferences_item_footer(image_proxy_info, image_proxy_label, rtl) }}
+                                {% endif %}
+
+                                {% if 'method' not in locked_preferences %}
+                                    {% set method_label = _('Method') %}
+                                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') %}
+                                    {{ preferences_item_header(method_info, method_label, rtl, 'method') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="method"
+                                            id="method">
+                                        <option value="POST"
+                                                {% if method == 'POST' %}selected="selected"{% endif %}>
+                                            POST
+                                        </option>
+                                        <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>
+                                            GET
+                                        </option>
+                                    </select>
+                                    {{ preferences_item_footer(method_info, method_label, rtl) }}
+                                {% endif %}
+
+                                {% if 'safesearch' not in locked_preferences %}
+                                    {% set safesearch_label = _('SafeSearch') %}
+                                    {% set safesearch_info = _('Filter content') %}
+                                    {{ preferences_item_header(safesearch_info, safesearch_label, rtl, 'safesearch') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="safesearch"
+                                            id="safesearch">
+                                        <option value="2"
+                                                {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
+                                        <option value="1"
+                                                {% if safesearch == '1' %}selected="selected"{% endif %}>{{ _('Moderate') }}</option>
                                         <option value="0"
-                                                {% if not preferences.get_value('advanced_search') %}selected="selected"{% endif %}>{{ _('Off') }}</option>
+                                                {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
+                                    </select>
+                                    {{ preferences_item_footer(safesearch_info, safesearch_label, rtl) }}
+                                {% endif %}
+
+                                {% if 'theme' not in locked_preferences %}
+                                    {% set theme_label = _('Themes') %}
+                                    {% set theme_info = _('Change searx layout') %}
+                                    {{ preferences_item_header(theme_info, theme_label, rtl, 'theme') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="theme"
+                                            id="theme">
+                                        {% for name in themes %}
+                                            <option value="{{ name }}"
+                                                    {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {{ preferences_item_footer(theme_info, theme_label, rtl) }}
+                                {% endif %}
+
+                                {% if 'penguin-style' not in locked_preferences %}
+                                    {{ preferences_item_header(_('Choose style for this theme'), _('Style'), rtl, 'penguin_style') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="penguin-style"
+                                            id="penguin_style">
+                                        <option value="light"
+                                                {% if preferences.get_value('penguin-style') == 'light' %}selected="selected"{% endif %}>
+                                            Light
+                                        </option>
+                                        <option value="dark"
+                                                {% if preferences.get_value('penguin-style') == 'dark' %}selected="selected"{% endif %}>
+                                            Dark
+                                        </option>
+                                    </select>
+                                    {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
+                                {% endif %}
+
+                                {% if 'results_on_new_tab' not in locked_preferences %}
+                                    {% set label = _('Results on new tabs') %}
+                                    {% set info = _('Open result links on new browser tabs') %}
+                                    {{ preferences_item_header(info, label, rtl, 'results_on_new_tab') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}"
+                                            name="results_on_new_tab"
+                                            id="results_on_new_tab">
+                                        <option value="1"
+                                                {% if results_on_new_tab %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                                        <option value="0"
+                                                {% if not results_on_new_tab %}selected="selected"{% endif %}>{{ _('Off') }}</option>
                                     </select>
                                     {{ preferences_item_footer(info, label, rtl) }}
+                                {% endif %}
 
-                                    {% if 'doi_resolver' not in locked_preferences %}
-                                        {% set label = _('Open Access DOI resolver') %}
-                                        {% set info = _('Redirect to open-access versions of publications when available (plugin required)') %}
-                                        {{ preferences_item_header(info, label, rtl, 'doi_resolver') }}
-                                        <select class="form-control {{ custom_select_class(rtl) }}" name="doi_resolver"
-                                                id="doi_resolver">
-                                            {% for doi_resolver_name,doi_resolver_url in doi_resolvers.items() %}
-                                                <option value="{{ doi_resolver_name }}"
-                                                        {% if doi_resolver_url == current_doi_resolver %}selected="selected"{% endif %}>
-                                                    {{ doi_resolver_name }} - {{ doi_resolver_url }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                        {{ preferences_item_footer(info, label, rtl) }}
-                                    {% endif %}
+                                {% set label = _('Show advanced settings') %}
+                                {% set info = _('Show advanced settings panel in the home page by default') %}
+                                {{ preferences_item_header(info, label, rtl, 'advanced_search') }}
+                                <select class="form-control {{ custom_select_class(rtl) }}" name="advanced_search"
+                                        id="advanced_search">
+                                    <option value="1"
+                                            {% if preferences.get_value('advanced_search') %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                                    <option value="0"
+                                            {% if not preferences.get_value('advanced_search') %}selected="selected"{% endif %}>{{ _('Off') }}</option>
+                                </select>
+                                {{ preferences_item_footer(info, label, rtl) }}
 
-                                    {% set label = _('Engine tokens') %}
-                                    {% set info = _('Access tokens for private engines') %}
-                                    {{ preferences_item_header(info, label, rtl, 'tokens') }}
-                                    <input class="form-control" id="tokens" name="tokens"
-                                           value='{{ preferences.tokens.get_value() }}'/>
+                                {% if 'doi_resolver' not in locked_preferences %}
+                                    {% set label = _('Open Access DOI resolver') %}
+                                    {% set info = _('Redirect to open-access versions of publications when available (plugin required)') %}
+                                    {{ preferences_item_header(info, label, rtl, 'doi_resolver') }}
+                                    <select class="form-control {{ custom_select_class(rtl) }}" name="doi_resolver"
+                                            id="doi_resolver">
+                                        {% for doi_resolver_name,doi_resolver_url in doi_resolvers.items() %}
+                                            <option value="{{ doi_resolver_name }}"
+                                                    {% if doi_resolver_url == current_doi_resolver %}selected="selected"{% endif %}>
+                                                {{ doi_resolver_name }} - {{ doi_resolver_url }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
                                     {{ preferences_item_footer(info, label, rtl) }}
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
+                                {% endif %}
 
-                    <div class="section" id="section-engines">
-                        <h3>{{ _('Engines') }}</h3>
-                        <div>
+                                {% set label = _('Engine tokens') %}
+                                {% set info = _('Access tokens for private engines') %}
+                                {{ preferences_item_header(info, label, rtl, 'tokens') }}
+                                <input class="form-control" id="tokens" name="tokens"
+                                       value='{{ preferences.tokens.get_value() }}'/>
+                                {{ preferences_item_footer(info, label, rtl) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Engines -->
+                    <div class="tab-content">
+                        <div class="tabbed">
 
                             <!-- Nav tabs -->
-                            <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist">
+                            {% for categ in all_categories %}
+                                <input type="radio" name="engine-tabs" id="engine-{{ categ|replace(' ', '_') }}"
+                                       {% if loop.first %}checked{% endif %}>
+                            {% endfor %}
+                            <ul class="tabs">
                                 {% for categ in all_categories %}
-                                    <li{% if loop.first %} class="active"{% endif %}><a
-                                            href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab"
-                                            data-toggle="tab">{{ _(categ) }}</a></li>
+                                    <li class="tab">
+                                        <label for="engine-{{ categ|replace(' ', '_') }}">{{ _(categ) }}</label>
+                                    </li>
                                 {% endfor %}
                             </ul>
 
-                            <noscript>
-                                <h3>{{ _('Engines') }}</h3>
-                            </noscript>
+
+                            {#                            <div class="hide_if_nojs">#}
+                            {#                                <p class="text-{% if rtl %}left{% else %}right{% endif %}">#}
+                            {#                                    <button type="button" class="btn btn-default btn-success"#}
+                            {#                                            id="allow-all-engines">{{ _("Allow all") }}</button>#}
+                            {#                                    <button type="button" class="btn btn-default btn-danger"#}
+                            {#                                            id="disable-all-engines">{{ _("Disable all") }}</button>#}
+                            {#                                </p>#}
+                            {#                            </div>#}
 
                             <!-- Tab panes -->
-                            <div class="tab-content">
-
-                                <div class="hide_if_nojs">
-                                    <p class="text-{% if rtl %}left{% else %}right{% endif %}">
-                                        <button type="button" class="btn btn-default btn-success"
-                                                id="allow-all-engines">{{ _("Allow all") }}</button>
-                                        <button type="button" class="btn btn-default btn-danger"
-                                                id="disable-all-engines">{{ _("Disable all") }}</button>
-                                    </p>
-                                </div>
-
-                                {% for categ in all_categories %}
-                                    <noscript><label>{{ _(categ) }}</label>
-                                    </noscript>
-                                    <div class="tab-pane{% if loop.first %} active{% endif %} active_if_nojs"
-                                         id="tab_engine_{{ categ|replace(' ', '_') }}">
-                                        <div class="container-fluid">
-                                            <fieldset>
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover table-condensed table-striped">
-                                                        <tr>
-                                                            {% if not rtl %}
-                                                                <th scope="col">{{ _("Allow") }}</th>
-                                                                <th scope="col">{{ _("Engine name") }}</th>
-                                                                <th scope="col">{{ _("Shortcut") }}</th>
-                                                                <th scope="col">{{ _("Selected language") }}</th>
-                                                                <th scope="col">{{ _("SafeSearch") }}</th>
-                                                                <th scope="col">{{ _("Time range") }}</th>
-                                                                <th scope="col">{{ _("Avg. time") }}</th>
-                                                                <th scope="col">{{ _("Max time") }}</th>
-                                                            {% else %}
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Max time") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Avg. time") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Time range") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("SafeSearch") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Selected language") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Shortcut") }}</th>
-                                                                <th scope="col"
-                                                                    class="text-right">{{ _("Engine name") }}</th>
-                                                                <th scope="col" class="text-right">{{ _("Allow") }}</th>
-                                                            {% endif %}
-                                                        </tr>
-                                                        {% for search_engine in engines_by_category[categ] %}
-                                                            {% if not search_engine.private %}
-                                                                <tr>
-                                                                    {% if not rtl %}
-                                                                        <td class="onoff-checkbox">
-                                                                            {{- checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) -}}
-                                                                        </td>
-                                                                        <th scope="row"><span
-                                                                                aria-labelledby="{{ 'tooltip_' + categ + '_' + search_engine.name }}">
+                            {% for categ in all_categories %}
+                                <noscript><label>{{ _(categ) }}</label>
+                                </noscript>
+                                <div class="tab-content" id="tab_engine_{{ categ|replace(' ', '_') }}">
+                                    <div class="container-fluid">
+                                        <fieldset>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-condensed table-striped">
+                                                    <tr>
+                                                        {% if not rtl %}
+                                                            <th scope="col">{{ _("Allow") }}</th>
+                                                            <th scope="col">{{ _("Engine name") }}</th>
+                                                            <th scope="col">{{ _("Shortcut") }}</th>
+                                                            <th scope="col">{{ _("Selected language") }}</th>
+                                                            <th scope="col">{{ _("SafeSearch") }}</th>
+                                                            <th scope="col">{{ _("Time range") }}</th>
+                                                            <th scope="col">{{ _("Avg. time") }}</th>
+                                                            <th scope="col">{{ _("Max time") }}</th>
+                                                        {% else %}
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Max time") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Avg. time") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Time range") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("SafeSearch") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Selected language") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Shortcut") }}</th>
+                                                            <th scope="col"
+                                                                class="text-right">{{ _("Engine name") }}</th>
+                                                            <th scope="col" class="text-right">{{ _("Allow") }}</th>
+                                                        {% endif %}
+                                                    </tr>
+                                                    {% for search_engine in engines_by_category[categ] %}
+                                                        {% if not search_engine.private %}
+                                                            <tr>
+                                                                {% if not rtl %}
+                                                                    <td class="switch-checkbox">
+                                                                        {{- checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) -}}
+                                                                    </td>
+                                                                    <th scope="row"><span
+                                                                            aria-labelledby="{{ 'tooltip_' + categ + '_' + search_engine.name }}">
                                             {%- if search_engine.enable_http %}
                                                 {{ icon('exclamation-sign', 'No HTTPS') }}{% endif -%}
-                                                                            {{- search_engine.name -}}</span>
-                                                                            {{- engine_about(search_engine, 'tooltip_' + categ + '_' + search_engine.name) -}}
-                                                                        </th>
-                                                                        <td class="name">{{ shortcuts[search_engine.name] }}</td>
-                                                                        <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
-                                                                        <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
-                                                                        <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
-                                                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">
-                                                                            {% if stats[search_engine.name]['warn_time'] %}
-                                                                                {{ icon('exclamation-sign') }} {% endif %}{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
-                                                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">
-                                                                            {% if stats[search_engine.name]['warn_timeout'] %}
-                                                                                {{ icon('exclamation-sign') }} {% endif %}{{ search_engine.timeout }}</td>
-                                                                    {% else %}
-                                                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">
-                                                                            {{ search_engine.timeout }}
-                                                                            {% if stats[search_engine.name]['warn_time'] %}
-                                                                                {{ icon('exclamation-sign') }}{% endif %}</td>
-                                                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">
-                                                                            {{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}
-                                                                            {% if stats[search_engine.name]['warn_time'] %}
-                                                                                {{ icon('exclamation-sign') }}{% endif %}</td>
-                                                                        <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
-                                                                        <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
-                                                                        <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
-                                                                        <td>{{ shortcuts[search_engine.name] }}</td>
-                                                                        <th scope="row"><span>{% if search_engine.enable_http %}
-                                                                            {{ icon('exclamation-sign', 'No HTTPS') }}{% endif %}{{ search_engine.name }}</span>{{ engine_about(search_engine) }}
-                                                                        </th>
-                                                                        <td class="onoff-checkbox">
-                                                                            {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
-                                                                        </td>
-                                                                    {% endif %}
-                                                                </tr>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </table>
-                                                </div>
-                                            </fieldset>
-                                        </div>
+                                                                        {{- search_engine.name -}}</span>
+                                                                        {{- engine_about(search_engine, 'tooltip_' + categ + '_' + search_engine.name) -}}
+                                                                    </th>
+                                                                    <td class="name">{{ shortcuts[search_engine.name] }}</td>
+                                                                    <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
+                                                                    <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
+                                                                    <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
+                                                                    <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">
+                                                                        {% if stats[search_engine.name]['warn_time'] %}
+                                                                            {{ icon('exclamation-sign') }} {% endif %}{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+                                                                    <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">
+                                                                        {% if stats[search_engine.name]['warn_timeout'] %}
+                                                                            {{ icon('exclamation-sign') }} {% endif %}{{ search_engine.timeout }}</td>
+                                                                {% else %}
+                                                                    <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">
+                                                                        {{ search_engine.timeout }}
+                                                                        {% if stats[search_engine.name]['warn_time'] %}
+                                                                            {{ icon('exclamation-sign') }}{% endif %}</td>
+                                                                    <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">
+                                                                        {{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}
+                                                                        {% if stats[search_engine.name]['warn_time'] %}
+                                                                            {{ icon('exclamation-sign') }}{% endif %}</td>
+                                                                    <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
+                                                                    <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
+                                                                    <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
+                                                                    <td>{{ shortcuts[search_engine.name] }}</td>
+                                                                    <th scope="row"><span>{% if search_engine.enable_http %}
+                                                                        {{ icon('exclamation-sign', 'No HTTPS') }}{% endif %}{{ search_engine.name }}</span>{{ engine_about(search_engine) }}
+                                                                    </th>
+                                                                    <td class="switch-checkbox">
+                                                                        {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </fieldset>
                                     </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <!-- Plugins -->
+                    <div class="tab-content">
+                        <fieldset>
+                            <div class="container-fluid">
+                                {% for plugin in plugins %}
+                                    {% if plugin.preference_section != 'onions' %}
+                                        <div class="columns">
+                                            <div class="column is-2">
+                                                {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
+                                            </div>
+                                            <div class="column is-10">
+                                                <h5 class="title is-5 is-spaced mb-1">
+                                                    {{ _(plugin.name) }}
+                                                </h5>
+                                                <label for="{{ 'plugin_' + plugin.id }}">{{ _(plugin.description) }}</label>
+
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
-
-                    <div class="section" id="section-plugins">
-                        <h3>{{ _('Plugins') }}</h3>
-                        <div>
-                            <fieldset>
-                                <div class="container-fluid">
-                                    {% for plugin in plugins %}
-                                        {% if plugin.preference_section != 'onions' %}
-                                            <div class="columns">
-                                                <div class="column is-2">
-                                                    {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
-                                                </div>
-                                                <div class="column is-10">
-                                                    <h5 class="title is-5 is-spaced">
-                                                        {{ _(plugin.name) }}
-                                                    </h5>
-                                                    <label for="{{ 'plugin_' + plugin.id }}">{{ _(plugin.description) }}</label>
-
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-
+                    <!-- Answers -->
                     {% if answerers %}
-                        <div class="section" id="section-answers">
-                            <h3>{{ _('Answers') }}</h3>
-                            <div>
-                                <p class="text-muted">
-                                    {{ _('This is the list of searx\'s instant answering modules.') }}
-                                </p>
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th{% if rtl %} class="text-right"{% endif %}>{{ _('Name') }}</th>
-                                        <th{% if rtl %} class="text-right"{% endif %}>{{ _('Keywords') }}</th>
-                                        <th{% if rtl %} class="text-right"{% endif %}>{{ _('Description') }}</th>
-                                        <th{% if rtl %} class="text-right"{% endif %}>{{ _('Examples') }}</th>
-                                    </tr>
 
-                                    {% for answerer in answerers %}
-                                        <tr>
-                                            <td>{{ answerer.info.name }}</td>
-                                            <td>{{ answerer.keywords|join(', ') }}</td>
-                                            <td>{{ answerer.info.description }}</td>
-                                            <td>{{ answerer.info.examples|join(', ') }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </div>
+                        <div class="tab-content">
+                            <p class="text-muted">
+                                {{ _('This is the list of searx\'s instant answering modules.') }}
+                            </p>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th{% if rtl %} class="text-right"{% endif %}>{{ _('Name') }}</th>
+                                    <th{% if rtl %} class="text-right"{% endif %}>{{ _('Keywords') }}</th>
+                                    <th{% if rtl %} class="text-right"{% endif %}>{{ _('Description') }}</th>
+                                    <th{% if rtl %} class="text-right"{% endif %}>{{ _('Examples') }}</th>
+                                </tr>
+
+                                {% for answerer in answerers %}
+                                    <tr>
+                                        <td>{{ answerer.info.name }}</td>
+                                        <td>{{ answerer.keywords|join(', ') }}</td>
+                                        <td>{{ answerer.info.description }}</td>
+                                        <td>{{ answerer.info.examples|join(', ') }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
                         </div>
                     {% endif %}
+                    <!-- Cookies -->
+                    <div class="tab-content">
+                        <p class="text-muted">
+                            {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br/>
+                            {{ _('With that list, you can assess searx transparency.') }}<br/>
+                        </p>
+                        {% if cookies %}
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Cookie name') }}</th>
+                                    <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Value') }}</th>
+                                </tr>
 
-                    <div class="section" id="section-cookies">
-                        <h3>{{ _('Cookies') }}</h3>
-                        <div>
-                            <p class="text-muted">
-                                {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br/>
-                                {{ _('With that list, you can assess searx transparency.') }}<br/>
-                            </p>
-                            {% if cookies %}
-                                <table class="table table-striped">
+                                {% for cookie in cookies %}
                                     <tr>
-                                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Cookie name') }}</th>
-                                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Value') }}</th>
+                                        <td class="text-muted">{{ cookie }}</td>
+                                        <td class="text-muted">{{ cookies[cookie] }}</td>
                                     </tr>
-
-                                    {% for cookie in cookies %}
-                                        <tr>
-                                            <td class="text-muted">{{ cookie }}</td>
-                                            <td class="text-muted">{{ cookies[cookie] }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            {% else %}
-                                {% include 'penguin/messages/no_cookies.html' %}
-                            {% endif %}
-                        </div>
+                                {% endfor %}
+                            </table>
+                        {% else %}
+                            {% include 'penguin/messages/no_cookies.html' %}
+                        {% endif %}
                     </div>
+                </div>
 
-                    <!-- /Settings -->
-                    <p class="text-muted">
-                        {{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
-                        {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
-                    </p>
 
-                    <p>
-                        {{ _('Search URL of the currently saved preferences') }}
-                        <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:
-                    </p>
+                <!-- /Settings -->
+                <p class="text-muted">
+                    {{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
+                    {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
+                </p>
 
-                    <div class="tab-pane">
-                        <input readonly="" class="form-control select-all-on-click cursor-text" type="url"
-                               value="{{ url_for('index', _external=True) }}?preferences=
+                <p>
+                    {{ _('Search URL of the currently saved preferences') }}
+                    <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:
+                </p>
+
+                <div class="tab-pane">
+                    <input readonly="" class="form-control select-all-on-click cursor-text" type="url"
+                           value="{{ url_for('index', _external=True) }}?preferences=
                                {{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
-                        <input type="submit" class="btn btn-primary" value="{{ _('save') }}"/>
-                        <a href="{{ url_for('index') }}">
-                            <div class="btn btn-default">{{ _('back') }}</div>
-                        </a>
-                        <a href="{{ url_for('clear_cookies') }}">
-                            <div class="btn btn-default">{{ _('Reset defaults') }}</div>
-                        </a>
-                    </div>
+                    <input type="submit" class="btn btn-primary" value="{{ _('save') }}"/>
+                    <a href="{{ url_for('index') }}">
+                        <div class="btn btn-default">{{ _('back') }}</div>
+                    </a>
+                    <a href="{{ url_for('clear_cookies') }}">
+                        <div class="btn btn-default">{{ _('Reset defaults') }}</div>
+                    </a>
                 </div>
             </div>
         </form>

@@ -1,0 +1,30 @@
+{% extends "penguin/base/base.html" %}
+{% block body %}
+    <div class="advanced-header">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" id="search_form" role="search">
+            <div class="container mt-5">
+                <div class="columns mb-0">
+                    <div class="column is-1 is-narrow is-flex is-align-items-center">
+                        <img class="small-main-logo" src="{{ url_for('static', filename='themes/penguin/img/logo_searx_a.png') }}"
+                             alt="searx logo"/>
+                    </div>
+                    <div class="column">
+                        {% include 'penguin/components/search_bar.html' %}
+                    </div>
+                    <div class="column is-narrow is-narrow is-flex is-align-items-center">
+                        {%- include 'penguin/components/languages.html' -%}
+                    </div>
+                    <div class="column is-narrow is-flex is-align-items-center">
+                        {%- include 'penguin/components/time_range.html' -%}
+                    </div>
+                </div>
+                {% block categoryinsert %}
+                {% endblock %}
+            </div>
+        </form>
+    </div>
+{#    <div class="container is-max-desktop">#}
+        {% block content %}
+        {% endblock %}
+{#    </div>#}
+{% endblock %}

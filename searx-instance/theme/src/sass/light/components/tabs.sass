@@ -1,0 +1,63 @@
+// heavily inspired by https://codepen.io/MPDoctor/pen/mpJdYe?editors=1100
+.tabbed
+  overflow-x: hidden /* so we could easily hide the radio inputs */
+  margin: 32px 0
+  padding-bottom: 16px
+
+
+.tabbed [type="radio"]
+  /* hiding the inputs */
+  display: none
+
+
+.tabs
+  display: flex
+  align-items: stretch
+  list-style: none
+  padding: 0
+
+.tab > label
+  display: block
+  margin-bottom: -1px
+  padding: 12px 15px
+  color: $black
+  //text-transform: uppercase
+  letter-spacing: 1px
+  cursor: pointer
+  transition: all 0.3s
+  border-bottom: 3px transparent solid
+
+
+.tab-content
+  display: none
+  //color: #777
+
+
+/* As we cannot replace the numbers with variables or calls to element properties, the number of this selector parts is our tab count limit */
+.tabbed [type="radio"]:nth-of-type(1):checked ~ .tabs .tab:nth-of-type(1) label,
+.tabbed [type="radio"]:nth-of-type(2):checked ~ .tabs .tab:nth-of-type(2) label,
+.tabbed [type="radio"]:nth-of-type(3):checked ~ .tabs .tab:nth-of-type(3) label,
+.tabbed [type="radio"]:nth-of-type(4):checked ~ .tabs .tab:nth-of-type(4) label,
+.tabbed [type="radio"]:nth-of-type(5):checked ~ .tabs .tab:nth-of-type(5) label,
+.tabbed [type="radio"]:nth-of-type(6):checked ~ .tabs .tab:nth-of-type(6) label,
+.tabbed [type="radio"]:nth-of-type(7):checked ~ .tabs .tab:nth-of-type(7) label,
+.tabbed [type="radio"]:nth-of-type(8):checked ~ .tabs .tab:nth-of-type(8) label,
+.tabbed [type="radio"]:nth-of-type(9):checked ~ .tabs .tab:nth-of-type(9) label,
+.tabbed [type="radio"]:nth-of-type(10):checked ~ .tabs .tab:nth-of-type(10) label,
+.tabbed [type="radio"]:nth-of-type(11):checked ~ .tabs .tab:nth-of-type(11) label,
+.tabbed [type="radio"]:nth-of-type(12):checked ~ .tabs .tab:nth-of-type(12) label
+  border-color: $dark-green
+
+.tabbed [type="radio"]:nth-of-type(1):checked ~ .tab-content:nth-of-type(1),
+.tabbed [type="radio"]:nth-of-type(2):checked ~ .tab-content:nth-of-type(2),
+.tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3),
+.tabbed [type="radio"]:nth-of-type(4):checked ~ .tab-content:nth-of-type(4),
+.tabbed [type="radio"]:nth-of-type(5):checked ~ .tab-content:nth-of-type(5),
+.tabbed [type="radio"]:nth-of-type(6):checked ~ .tab-content:nth-of-type(6),
+.tabbed [type="radio"]:nth-of-type(7):checked ~ .tab-content:nth-of-type(7),
+.tabbed [type="radio"]:nth-of-type(8):checked ~ .tab-content:nth-of-type(8),
+.tabbed [type="radio"]:nth-of-type(9):checked ~ .tab-content:nth-of-type(9),
+.tabbed [type="radio"]:nth-of-type(10):checked ~ .tab-content:nth-of-type(10),
+.tabbed [type="radio"]:nth-of-type(11):checked ~ .tab-content:nth-of-type(11),
+.tabbed [type="radio"]:nth-of-type(12):checked ~ .tab-content:nth-of-type(12)
+  display: block

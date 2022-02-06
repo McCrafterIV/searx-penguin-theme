@@ -173,14 +173,14 @@
 
 {% macro preferences_item_header(info, label, rtl, id) -%}
     {%- if rtl -%}
-        <div class="columns is-multiline">{{- "" -}}
+        <div class="columns is-multiline preference-entry">{{- "" -}}
         <label class="column is-3"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
-        <span class="column help-block pull-left">{{ info }}</span>{{- "" -}}
-        <div class="column is-9">
+        <small class="column help-block pull-left">{{ info }}</small>{{- "" -}}
+        <div class="column is-9 preference-input">
     {%- else -%}
-        <div class="columns is-multiline">
+        <div class="columns is-multiline preference-entry">
         <label class="column is-3"{% if id %} for="{{ id }}"{% endif %}>{{ label }}</label>{{- "" -}}
-        <div class="column is-9">
+        <div class="column is-9 preference-input">
     {%- endif -%}
 {%- endmacro %}
 
@@ -189,7 +189,7 @@
         </div>
         </div>
     {%- else -%}
-        <span >{{ info }}</span>{{- "" -}}
+        <small class="mt-1">{{ info }}</small>{{- "" -}}
         </div>
         </div>
     {%- endif -%}
@@ -200,15 +200,13 @@
 {%- endmacro %}
 
 {% macro checkbox_toggle(id, blocked) -%}
-    <div class="onoffswitch">{{- "" -}}
+    <div class="switch">
         <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %}
-               class="onoffswitch-checkbox">{{- "" -}}
-        <label class="onoffswitch-label" for="{{ id }}">{{- "" -}}
-            <span class="onoffswitch-inner"></span>{{- "" -}}
-            <span class="onoffswitch-switch"></span>{{- "" -}}
-        </label>{{- "" -}}
-        <label class="visually-hidden" for="{{ id }}">{{ _('Allow') }}</label>{{- "" -}}
-    </div>{{- "" -}}
+               class="switch-checkbox">
+        <label class="switch-label" for="{{ id }}">
+            <span class="switch-span">Off</span>
+        </label>
+    </div>
 {%- endmacro %}
 
 {% macro support_toggle(supports) -%}
