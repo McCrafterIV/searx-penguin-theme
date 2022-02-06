@@ -7,37 +7,30 @@
     label, .input-group-addon 
         font-size: 1.2rem
         font-weight: normal
-        background-color: white
-        border: $mild-gray 1px solid
+        background-color: $c_background
+        border: $c_lhighlight 1px solid
         border-right: none
-        color: $dark-gray
+        color: $c_text-secondary
         padding-bottom: 0.4rem
         padding-right: 0.7rem
         padding-left: 0.7rem
-    
 
     label:last-child, .input-group-addon:last-child 
-        border-right: $mild-gray 1px solid
-    
+        border-right: $c_lhighlight 1px solid
 
     input[type="radio"] 
         display: none
-    
 
     input[type="radio"]:checked + label
-        color: $black
+        color: $c_text
         font-weight: bold
-        border-bottom: $light-green 5px solid
+        border-bottom: $c_accent 5px solid
     
-
-
-#check-advanced:focus + label 
+#check-advanced:focus + label
     text-decoration: underline
-
 
 #check-advanced:checked ~ #advanced-search-container 
     display: block
-
 
 .advanced 
     padding: 0
@@ -45,5 +38,3 @@
     text-align: right
     label, select 
         cursor: pointer
-    
-

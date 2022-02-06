@@ -6,15 +6,15 @@
   .infobox-url 
     a 
       padding: 10px 15px
-      border: $gray 1px solid
+      border: $c_lhighlight 1px solid
       display: block
       margin: 0
       border-top: none
       font-size: 10pt
-      color: $black
+      color: $c_text !important
 
       &:after 
-        border: solid $dark-gray
+        border: solid $c_text-secondary
         border-width: 0 2px 2px 0
         width: 8px
         height: 8px
@@ -33,28 +33,18 @@
   
   .infobox-content-wrapper
     padding: 15px
-    border: $gray 1px solid
-    border-radius: $border-radius
-    border-bottom-left-radius: 0
-    border-bottom-right-radius: 0
+    border: $c_lhighlight 1px solid
+    border-radius: $border-radius $border-radius 0 0
 
-
-    .infobox-title 
-      color: $black
+    .infobox-title
+      color: $c_text
       font-size: 18pt
-      //margin-bottom: 10px
-    
 
     .infobox-image 
       float: right
       max-width: 150px
       margin: 5px
-    
 
     .infobox-content 
       font-size: 10pt
       margin-bottom: 0
-    
-
-  
-

@@ -1,33 +1,24 @@
-
-#search_suggestions 
+#search_suggestions
   position: absolute
   display: none
-  border: $gray 1px solid
+  border: $c_lhighlight 1px solid
   border-radius: 0 0 $border-radius $border-radius
   text-align: left
-  background-color: #ffffff
+  background-color: $c_background
   z-index: 50
   .suggestion 
     padding: 8px 20px
     cursor: pointer
 
     &:hover 
-      background-color: $gray
+      background-color: $c_lhighlight
     
-
-    &.selected 
-      background-color: $gray
+    &.selected
+      background-color: $c_lhighlight
     
-  
-
-
-  &.show 
+  &.show
     display: block
-  
-
-
 
 #search_suggestions.show:not(:empty) ~ #search_box 
   border-bottom-right-radius: 0
   border-bottom-left-radius: 0
-

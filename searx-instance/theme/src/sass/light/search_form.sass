@@ -2,7 +2,7 @@
   display: flex
   align-items: center
   flex-direction: row
-  border: $gray 1px solid
+  border: $c_lhighlight 1px solid
   border-radius: $border-radius
   $buttonWidth: 40px
   max-width: calc(100 * 960px / 70)
@@ -21,36 +21,30 @@
     outline: none
     font-size: 12pt
   
-
-  .input-group-btn 
+  .input-group-btn
     align-items: center
     display: inline-flex
     flex-direction: row
     width: calc(#{$buttonWidth} * 2)
-    border-left-color: $gray
+    border-left-color: $c_lhighlight
     border-left-style: solid
     border-left-width: 1px
   
-
-  #clear_search 
-    border-right-color: $gray
+  #clear_search
+    border-right-color: $c_lhighlight
     border-right-style: solid
     border-right-width: 1px
     align-items: center
-    color: $dark-gray
+    color: $c_text-secondary
     border-radius: 0 !important
-  
 
   #submit_search 
-    color: $dark-green
+    color: $c_accent
     align-items: center
     &:hover 
       color: #FFFFFF
-      background-color: $dark-green
-      border-bottom-right-radius: $border-radius
-      border-top-right-radius: $border-radius
-    
-  
+      background-color: $c_accent
+      border-radius: 0 $border-radius $border-radius 0
 
   button 
     cursor: pointer
@@ -61,10 +55,6 @@
     background: none
     margin: 0
   
-
-
-
-#main-logo 
+#main-logo
   max-width: 300px
   width: 100vw
-

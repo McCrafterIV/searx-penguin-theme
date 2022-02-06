@@ -25,7 +25,6 @@ module.exports = function (grunt) {
                 timestamp: true,
                 src: [
                     './leaflet/dist/leaflet.css',
-                    './bulma/css/bulma.min.css',
                 ]
             },
             icons: {
