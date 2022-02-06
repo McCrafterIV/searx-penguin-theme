@@ -1,7 +1,20 @@
 {% from 'penguin/base/macros.html' import icon %}
 <div class="searx-navbar">{{- "" -}}
     <span></span>
-    <a>{{ icon('moon') }} <span>Dark theme</span></a>
+        <a class="hide_if_nojs">
+            {% if 'penguin-style' not in locked_preferences %}
+                <form method="post" action="{{ url_for('preferences') }}" id="search_form">
+                    <input type="checkbox" class="hidden" id="penguin-style" name="penguin-style" value="{% if preferences.get_value('penguin-style') == "light" %}dark{% else %}light{% endif %}" onchange="this.form.submit()" >
+                    <label for="penguin-style">
+                        {% if preferences.get_value('penguin-style') == "light" -%}
+                            {{ icon('moon') }} <span>Dark theme</span>
+                        {%- else -%}
+                           {{ icon('sun') }} <span>Light theme</span>
+                        {%- endif %}
+                    </label>
+                </form>
+            {% endif %}
+        </a>
     <a href="{{ url_for('about') }}">{{ icon('info') }} <span>About</span></a>
     <a href="{{ url_for('preferences') }}">{{ icon('settings') }} <span>Settings</span></a>
 </div>

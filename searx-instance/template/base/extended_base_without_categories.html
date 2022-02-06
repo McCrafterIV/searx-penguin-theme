@@ -5,8 +5,10 @@
             <div class="container mt-5">
                 <div class="columns mb-0">
                     <div class="column is-1 is-narrow is-flex is-align-items-center">
-                        <img class="small-main-logo" src="{{ url_for('static', filename='themes/penguin/img/logo_searx_a.png') }}"
-                             alt="searx logo"/>
+                        <a href="/">
+                            <img class="small-main-logo" src="{{ url_for('static', filename='themes/penguin/img/logo_searx_a.png') }}"
+                                 alt="searx logo"/>
+                        </a>
                     </div>
                     <div class="column">
                         {% include 'penguin/components/search_bar.html' %}
